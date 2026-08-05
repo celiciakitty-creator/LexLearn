@@ -15,10 +15,11 @@ export function HeroSection() {
 
   return (
     <section
+      id="hero"
       className="relative overflow-hidden border-b border-lex-navy/8 bg-gradient-to-b from-lex-pale via-lex-surface to-lex-pale"
       aria-labelledby="hero-heading"
     >
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[1fr_minmax(280px,42%)] lg:items-center lg:gap-10 lg:px-8 lg:py-16">
+      <div className="mx-auto grid max-w-6xl items-start gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[1fr_minmax(280px,42%)] lg:gap-10 lg:px-8 lg:py-16">
         <motion.div
           className="relative z-10 order-2 lg:order-1"
           initial={{ opacity: 0, y: 20 }}

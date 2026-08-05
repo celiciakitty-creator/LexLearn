@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 
 import "./globals.css";
+import { getSiteUrl, siteConfig } from "@/lib/site-metadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,16 +21,53 @@ const playfair = Playfair_Display({
   style: ["normal", "italic"],
 });
 
+const siteUrl = getSiteUrl();
+
 export const metadata: Metadata = {
-  title: "LexLearn | Beginner UK Law Learning Platform",
-  description:
-    "Explore civil law, criminal law and everyday legal rights with interactive lessons, real-life examples and quizzes for UK beginners.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
+  authors: [{ name: siteConfig.author }],
+  creator: siteConfig.author,
+  publisher: siteConfig.name,
+  applicationName: siteConfig.name,
+  category: "education",
+  openGraph: {
+    type: "website",
+    locale: siteConfig.locale,
+    url: siteUrl,
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: siteConfig.title,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: ["/opengraph-image"],
+  },
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="en-GB"
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-lex-surface font-sans text-lex-navy">

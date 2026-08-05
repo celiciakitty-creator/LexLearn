@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Moon, User } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { Moon } from "lucide-react";
 
+import { AuthHeaderActions } from "@/components/layout/auth-header-actions";
 import { LexLearnLogo } from "@/components/home/lexlearn-logo";
 import { Button } from "@/components/ui/button";
 import { siteNavigation } from "@/lib/navigation";
@@ -20,9 +22,36 @@ function isActive(href: string, pathname: string): boolean {
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    const syncHeaderHeight = () => {
+      document.documentElement.style.setProperty(
+        "--site-header-height",
+        `${header.offsetHeight}px`
+      );
+    };
+
+    syncHeaderHeight();
+
+    const observer = new ResizeObserver(syncHeaderHeight);
+    observer.observe(header);
+    window.addEventListener("resize", syncHeaderHeight);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", syncHeaderHeight);
+    };
+  }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-lex-navy/8 bg-lex-surface/90 backdrop-blur-md">
+    <header
+      ref={headerRef}
+      className="sticky top-0 z-50 border-b border-lex-navy/8 bg-lex-surface/90 backdrop-blur-md"
+    >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <LexLearnLogo />
 
@@ -63,14 +92,7 @@ export function SiteHeader() {
           >
             <Moon className="size-4" />
           </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="size-9 border-lex-navy/12 bg-lex-navy text-white shadow-sm hover:bg-lex-navy/90"
-            aria-label="Open profile"
-          >
-            <User className="size-4" />
-          </Button>
+          <AuthHeaderActions />
         </div>
       </div>
 

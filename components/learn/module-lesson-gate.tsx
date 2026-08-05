@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Lock } from "lucide-react";
 
+import { LudwittAuthGate } from "@/components/learn/ludwitt-auth-gate";
 import { LessonView } from "@/components/learn/lesson-view";
 import { isModuleUnlocked } from "@/lib/course/index";
 import type { LessonContent, ModuleId } from "@/lib/course/types";
@@ -44,5 +45,9 @@ export function ModuleLessonGate({ lesson }: ModuleLessonGateProps) {
     );
   }
 
-  return <LessonView lesson={lesson} />;
+  return (
+    <LudwittAuthGate returnPath={`/learn/${moduleId}`}>
+      <LessonView lesson={lesson} />
+    </LudwittAuthGate>
+  );
 }

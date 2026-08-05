@@ -6,6 +6,27 @@ All notable changes to LexLearn are documented here.
 
 ### Added
 
+- **Ludwitt OAuth** — PKCE S256 sign-in at `/auth/login`, callback at `/auth/callback`, logout at `/auth/logout`
+- **Encrypted HttpOnly session cookie** — server-managed tokens; `/api/auth/me` returns public profile only
+- **Auth header** — “Sign in with Ludwitt”, learner name/avatar, logout action
+- **Lesson and quiz auth gates** — Ludwitt sign-in prompt before tracked learning when OAuth is configured
+- **Branded OAuth error page** at `/auth/error`
+- **Server utilities** in `lib/ludwitt/` — config, PKCE, oauth-client, session-crypto, cookies, session
+- **`.env.example`** — documents required Ludwitt environment variables
+
+### Security
+
+- No tokens in `localStorage`, `sessionStorage`, URL params, or client-readable cookies
+- CSRF state + PKCE verification; Secure cookies in production
+
+### Not included (intentional)
+
+- Ludwitt AI proxy and credit spending
+- Hult JWT launch / learning events integration (pending cohort clarification)
+- Production callback URL (requires Ludwitt staff setup)
+
+### Added (prior unreleased work)
+
 - **Module 4 — Assault, Self-Defence and Weapons** — full lesson, late-night shop scenario, R v Williams (Gladstone) Case Spotlight, knowledge check, 5-question quiz (`lib/course/content/module-4.ts`)
 - **Module 5 — Your Everyday Legal Rights** — full lesson, faulty phone scenario, Consumer Rights Act 2015 Statute Spotlight, knowledge check, 5-question quiz (`lib/course/content/module-5.ts`)
 - **Statute Spotlight** — reusable `StatuteSpotlightCard` component and `lib/statute-spotlights.ts`

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Lock } from "lucide-react";
 
+import { LudwittAuthGate } from "@/components/learn/ludwitt-auth-gate";
 import { QuizView } from "@/components/learn/quiz-view";
 import { isModuleUnlocked } from "@/lib/course/index";
 import type { ModuleId, QuizContent } from "@/lib/course/types";
@@ -44,5 +45,13 @@ export function ModuleQuizGate({ quiz }: ModuleQuizGateProps) {
     );
   }
 
-  return <QuizView quiz={quiz} />;
+  return (
+    <LudwittAuthGate
+      returnPath={`/quiz/${moduleId}`}
+      title="Sign in to take the quiz"
+      description="LexLearn uses Ludwitt to identify you before recording quiz results and unlocking the next module."
+    >
+      <QuizView quiz={quiz} />
+    </LudwittAuthGate>
+  );
 }
