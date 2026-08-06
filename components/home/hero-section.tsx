@@ -16,7 +16,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative border-b border-lex-navy/8 bg-gradient-to-b from-lex-pale via-lex-surface to-lex-pale"
+      className="relative z-0 border-b border-lex-navy/8 bg-gradient-to-b from-lex-pale via-lex-surface to-lex-pale"
       aria-labelledby="hero-heading"
     >
       <div className="mx-auto grid max-w-6xl items-start gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[1fr_minmax(280px,42%)] lg:gap-10 lg:px-8 lg:py-16">
@@ -56,13 +56,13 @@ export function HeroSection() {
         </motion.div>
 
         <motion.div
-          className="relative order-1 lg:order-2"
+          className="relative z-0 order-1 lg:order-2"
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.65, ease: "easeOut", delay: 0.1 }}
         >
           <div
-            className="pointer-events-none absolute -inset-4 rounded-3xl bg-lex-navy/5 blur-2xl lg:-inset-6"
+            className="pointer-events-none absolute -inset-4 z-0 rounded-3xl bg-lex-navy/5 blur-2xl lg:-inset-6"
             aria-hidden
           />
           <HeroBannerImage />

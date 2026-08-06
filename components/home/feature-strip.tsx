@@ -5,8 +5,9 @@ import { features } from "@/lib/homepage-data";
 
 export function FeatureStrip() {
   return (
-    <MotionWrapper className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <div className="-mt-6 mb-10 grid gap-4 sm:grid-cols-2 lg:-mt-8 lg:grid-cols-3 xl:grid-cols-5">
+    <div className="relative z-20">
+      <MotionWrapper className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="-mt-4 mb-10 grid gap-4 sm:grid-cols-2 lg:-mt-6 lg:grid-cols-3 xl:grid-cols-5">
         {features.map((feature, index) => (
           <MotionHover key={feature.title}>
             <MotionWrapper delay={index * 0.06}>
@@ -26,7 +27,8 @@ export function FeatureStrip() {
             </MotionWrapper>
           </MotionHover>
         ))}
-      </div>
-    </MotionWrapper>
+        </div>
+      </MotionWrapper>
+    </div>
   );
 }
