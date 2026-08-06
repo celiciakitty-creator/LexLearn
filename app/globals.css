@@ -140,7 +140,7 @@
     @apply font-sans scroll-smooth;
     scroll-padding-top: var(--site-header-height);
   }
-  [id] {
+  :where(main, section, article)[id]:not(#hero) {
     scroll-margin-top: var(--site-header-height);
   }
   h1,
