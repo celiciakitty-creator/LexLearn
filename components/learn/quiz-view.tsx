@@ -7,6 +7,7 @@ import { LegalDisclaimer } from "@/components/layout/legal-disclaimer";
 import { Button } from "@/components/ui/button";
 import type { QuizContent } from "@/lib/course/types";
 import { trackMetricsEvent } from "@/lib/metrics/track-client";
+import { markPilotQuizAttempted } from "@/lib/pilot/journey-storage";
 import { recordQuizAttempt } from "@/lib/progress/storage";
 import { useProgress } from "@/hooks/use-progress";
 import { cn } from "@/lib/utils";
@@ -45,6 +46,7 @@ export function QuizView({ quiz }: QuizViewProps) {
     }, 0);
     setSubmitted(true);
     recordQuizAttempt(finalScore);
+    markPilotQuizAttempted();
     trackMetricsEvent("quiz_submitted", {
       module_id: quiz.moduleId,
       score: finalScore,

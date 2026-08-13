@@ -5,6 +5,7 @@ import { LegalBites } from "@/components/learn/legal-bites";
 import { ModuleCard } from "@/components/learn/module-card";
 import { StatuteSpotlightCard } from "@/components/learn/statute-spotlight";
 import { LegalDisclaimer } from "@/components/layout/legal-disclaimer";
+import { PilotJourney } from "@/components/pilot/pilot-journey";
 import {
   COURSE_SUBTITLE,
   COURSE_TITLE,
@@ -14,8 +15,11 @@ import type { ModuleId } from "@/lib/course/types";
 import { getModuleLinkedSpotlights } from "@/lib/case-spotlights";
 import { getModuleLinkedStatutes } from "@/lib/statute-spotlights";
 import { legalFacts } from "@/lib/legal-facts";
+import { usePilotJourney } from "@/hooks/use-pilot-journey";
 
 export function LearnPageContent() {
+  const { steps } = usePilotJourney();
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
       <header className="mb-8">
@@ -33,6 +37,15 @@ export function LearnPageContent() {
           <LegalDisclaimer />
         </div>
       </header>
+
+      <div className="mb-8 rounded-2xl border border-lex-navy/10 bg-lex-pale/30 p-4 sm:p-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-lex-gold">
+          Pilot journey
+        </p>
+        <div className="mt-3">
+          <PilotJourney steps={steps} variant="inline" />
+        </div>
+      </div>
 
       <section className="mb-8" aria-labelledby="learn-bites-heading">
         <h2
@@ -76,10 +89,20 @@ export function LearnPageContent() {
         </ul>
       </section>
 
+      <div className="mb-4">
+        <h2 className="font-serif text-xl font-semibold text-lex-navy">
+          Modules
+        </h2>
+        <p className="mt-2 text-sm leading-relaxed text-lex-navy/70">
+          For the pilot, start with Module 1. Completing one lesson and quiz is
+          enough to test the experience.
+        </p>
+      </div>
+
       <ul className="space-y-4" role="list">
         {MODULE_ORDER.map((moduleId: ModuleId) => (
           <li key={moduleId}>
-            <ModuleCard moduleId={moduleId} />
+            <ModuleCard moduleId={moduleId} pilotStart={moduleId === "1"} />
           </li>
         ))}
       </ul>

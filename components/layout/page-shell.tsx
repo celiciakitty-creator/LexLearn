@@ -1,5 +1,6 @@
 import { LegalDisclaimer } from "@/components/layout/legal-disclaimer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { PilotExperienceLayer } from "@/components/pilot/pilot-experience-layer";
 
 type PageShellProps = {
   children: React.ReactNode;
@@ -19,6 +20,7 @@ export function PageShell({
       >
         {children}
       </main>
+      <PilotExperienceLayer />
       {showDisclaimer && (
         <footer className="border-t border-lex-navy/8 bg-lex-pale/40 py-4">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

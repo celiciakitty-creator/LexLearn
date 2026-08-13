@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { AlertCircle, CheckCircle2, Loader2, Star } from "lucide-react";
 
@@ -19,6 +20,7 @@ import {
   type FeedbackSubmission,
   type WouldUseAgain,
 } from "@/lib/feedback/types";
+import { usePilotJourney } from "@/hooks/use-pilot-journey";
 import { cn } from "@/lib/utils";
 
 type FormState = {
@@ -40,6 +42,7 @@ const INITIAL_FORM: FormState = {
 type SubmitStatus = "idle" | "loading" | "pending" | "stored" | "error";
 
 export function FeedbackSection() {
+  const { learnComplete, completeFeedback } = usePilotJourney();
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<SubmitStatus>("idle");
@@ -93,12 +96,14 @@ export function FeedbackSection() {
         setStatus("stored");
         setStatusMessage(data.message);
         setForm(INITIAL_FORM);
+        completeFeedback();
         return;
       }
 
       setStatus("pending");
       setStatusMessage(data.message);
       setForm(INITIAL_FORM);
+      completeFeedback();
     } catch {
       setStatus("error");
       setStatusMessage(
@@ -126,11 +131,27 @@ export function FeedbackSection() {
               How was your LexLearn experience?
             </h2>
             <p className="mt-4 text-base leading-relaxed text-lex-navy/75">
-              Finished a lesson or quiz? Help shape what LexLearn becomes next.
-              This takes less than a minute.
+              {learnComplete
+                ? "Finished a lesson or quiz? Help shape what LexLearn becomes next. This takes less than a minute."
+                : "Feedback opens after you try the pilot — complete a lesson or quiz first."}
             </p>
           </div>
 
+          {!learnComplete ? (
+            <div className="mt-8 rounded-2xl border border-dashed border-lex-navy/15 bg-lex-pale/20 p-6 text-center sm:p-8">
+              <p className="text-sm leading-relaxed text-lex-navy/70">
+                Feedback opens after you try the pilot. Start with Module 1, work
+                through a lesson, and try the quiz — then come back here to share
+                your thoughts.
+              </p>
+              <Link
+                href="/learn/pilot"
+                className="mt-5 inline-flex h-10 items-center justify-center rounded-lg border border-lex-navy/15 bg-white px-4 text-sm font-medium text-lex-navy hover:bg-lex-pale"
+              >
+                Start the Pilot
+              </Link>
+            </div>
+          ) : (
           <form
             onSubmit={handleSubmit}
             className="mt-8 space-y-8 rounded-2xl border border-lex-navy/10 bg-white p-5 shadow-sm sm:p-8"
@@ -398,6 +419,7 @@ export function FeedbackSection() {
               reference API review.
             </p>
           </form>
+          )}
         </div>
       </section>
     </MotionWrapper>

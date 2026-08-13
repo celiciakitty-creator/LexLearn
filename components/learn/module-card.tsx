@@ -20,9 +20,10 @@ import { cn } from "@/lib/utils";
 
 type ModuleCardProps = {
   moduleId: ModuleId;
+  pilotStart?: boolean;
 };
 
-export function ModuleCard({ moduleId }: ModuleCardProps) {
+export function ModuleCard({ moduleId, pilotStart = false }: ModuleCardProps) {
   const { progress, hydrated } = useProgress();
   const meta = getModuleMeta(moduleId);
 
@@ -45,9 +46,11 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
     <article
       className={cn(
         "rounded-2xl border bg-white p-5 shadow-sm transition-shadow",
-        status === "locked"
-          ? "border-lex-navy/8 opacity-80"
-          : "border-lex-navy/10 hover:shadow-md"
+        pilotStart && unlocked
+          ? "border-lex-gold/35 bg-gradient-to-br from-white to-lex-gold/5 ring-1 ring-lex-gold/20"
+          : status === "locked"
+            ? "border-lex-navy/8 opacity-80"
+            : "border-lex-navy/10 hover:shadow-md"
       )}
     >
       <div className="flex items-start justify-between gap-4">
@@ -56,6 +59,11 @@ export function ModuleCard({ moduleId }: ModuleCardProps) {
             <p className="text-xs font-semibold uppercase tracking-wide text-lex-gold">
               Module {moduleId}
             </p>
+            {pilotStart && unlocked && (
+              <span className="inline-flex items-center rounded-full bg-lex-gold/20 px-2.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide text-lex-navy ring-1 ring-lex-gold/30">
+                Start Here
+              </span>
+            )}
             <CategoryBadge category={meta.category} />
           </div>
           <h2 className="mt-1 font-serif text-xl font-semibold text-lex-navy">
