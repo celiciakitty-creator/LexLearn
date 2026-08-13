@@ -28,7 +28,8 @@ docs/                   # Project documentation
 
 | Route | Purpose |
 |-------|---------|
-| `/` | Homepage — hero, features, Legal Bites, Case Spotlight, progress, modules, Why Learn UK Law |
+| `/` | Homepage — hero, pilot sections, features, learning areas, Legal Bites, Case Spotlight, progress, modules, pilot CTA, Why Learn, feedback form |
+| `/api/feedback` | Validates pilot feedback; persistence pending (`202` when no backend configured) |
 | `/learn` | Module list, Legal Bites carousel, Case Spotlight |
 | `/learn/[moduleId]` | Lesson view — Ludwitt sign-in required when OAuth is configured |
 | `/quiz/[moduleId]` | Module quiz — Ludwitt sign-in required when OAuth is configured |
@@ -130,8 +131,37 @@ Brand tokens in `app/globals.css`: `lex-navy`, `lex-pale`, `lex-surface`, `lex-g
 
 ## Not yet implemented
 
+- Week 5 learning event tracking (`lesson_started`, `lesson_completed`, `quiz_submitted`) — see `docs/WEEK5_METRICS_PLAN.md`
+- Pilot feedback central persistence — `FEEDBACK_PERSISTENCE_BACKEND` not configured
 - Ludwitt AI credit proxy and `credits:spend` usage
-- Hult cohort JWT launch and learning event tracking (pending staff clarification)
+- Hult cohort JWT launch and learning event tracking (pending reference API review)
 - Production Ludwitt callback URL registration for deployed domain
 - Persistent server-side token store (database) for multi-instance deployments
 - Cross-device progress sync
+
+## Pilot feedback
+
+### Client
+
+- `components/home/feedback-section.tsx` — native form UI (not embedded Google Form)
+- `components/home/survey-link-button.tsx` — optional external survey link
+
+### Server
+
+- `lib/feedback/types.ts` — typed submission model
+- `lib/feedback/validation.ts` — shared client/server validation rules
+- `lib/feedback/persistence.ts` — abstraction for future backend (Supabase, Week 5 API, etc.)
+- `app/api/feedback/route.ts` — validates POST body; returns `202` with `stored: false` until persistence is configured
+
+No PII fields (name, phone, address, DOB). Does not use `localStorage` for feedback or Ludwitt endpoints.
+
+## Homepage sections (Week 5 pilot)
+
+| Section | Component | Purpose |
+|---------|-----------|---------|
+| Hero | `hero-section.tsx` | Value prop + subtle “Try the Pilot” link |
+| How it works | `audience-section.tsx` (`HowItWorksSection`) | Learning format highlights |
+| Who is it for | `audience-section.tsx` (`AudienceSection`) | Four audience cards |
+| Learning areas | `learning-areas-section.tsx` | Civil / Criminal / Everyday Law |
+| Pilot CTA | `pilot-cta-section.tsx` | Start lesson + give feedback |
+| Feedback | `feedback-section.tsx` | Post-use pilot feedback form |

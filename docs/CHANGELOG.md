@@ -4,9 +4,20 @@ All notable changes to LexLearn are documented here.
 
 ## [Unreleased]
 
-### Added
+### Added (Week 5 startup pilot)
 
-- **Ludwitt OAuth** — PKCE S256 sign-in at `/auth/login`, callback at `/auth/callback`, logout at `/auth/logout`
+- **Homepage repositioning** — pilot messaging, clearer value proposition for young audiences
+- **How it works** section — bite-sized lessons, quizzes, legal facts, progress highlights
+- **Who is LexLearn for?** — four audience cards with Lucide icons
+- **Three learning areas** — Civil, Criminal and Everyday Law with England & Wales note
+- **Pilot CTA** — prominent “Try the LexLearn Pilot” section + subtle hero pilot link
+- **Native feedback form** — `FeedbackSection` at `/#feedback` with validation and loading/error states
+- **Feedback architecture** — `lib/feedback/` types, validation, persistence abstraction; `POST /api/feedback` (returns 202, persistence pending)
+- **Survey CTA** — optional `NEXT_PUBLIC_LEXLEARN_SURVEY_URL` via `SurveyLinkButton`
+- **Week 5 metrics plan** — `docs/WEEK5_METRICS_PLAN.md` (hook points only; no tracking implemented)
+- **Mobile overflow guard** — `overflow-x-hidden` on main content shell
+
+### Added (Ludwitt OAuth — prior)
 - **Encrypted HttpOnly session cookie** — server-managed tokens; `/api/auth/me` returns public profile only
 - **Auth header** — “Sign in with Ludwitt”, learner name/avatar, logout action
 - **Lesson and quiz auth gates** — Ludwitt sign-in prompt before tracked learning when OAuth is configured

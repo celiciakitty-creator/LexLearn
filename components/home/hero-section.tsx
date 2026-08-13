@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 import { HeroBannerImage } from "@/components/home/hero-banner-image";
 import { getContinueHref } from "@/lib/course/index";
@@ -21,7 +21,7 @@ export function HeroSection() {
     >
       <div className="mx-auto grid max-w-6xl items-start gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[1fr_minmax(280px,42%)] lg:gap-10 lg:px-8 lg:py-16">
         <motion.div
-          className="relative z-10 order-2 lg:order-1"
+          className="relative z-10 order-2 min-w-0 lg:order-1"
           initial={false}
         >
           <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-lex-gold">
@@ -29,7 +29,7 @@ export function HeroSection() {
           </p>
           <h1
             id="hero-heading"
-            className="font-serif text-4xl leading-[1.12] text-lex-navy sm:text-5xl lg:text-[3.25rem]"
+            className="font-serif text-3xl leading-[1.12] text-lex-navy sm:text-5xl lg:text-[3.25rem]"
           >
             {hero.heading[0]}
             <br />
@@ -38,13 +38,13 @@ export function HeroSection() {
           <p className="mt-5 max-w-xl text-base leading-relaxed text-lex-navy/75 sm:text-lg">
             {hero.supporting}
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <Link
               href={continueHref}
               className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-lex-navy px-6 text-base font-medium text-white shadow-md hover:bg-lex-navy/90"
             >
               {hero.primaryCta}
-              <ArrowRight className="size-4" aria-hidden />
+              <ArrowRight className="size-4 shrink-0" aria-hidden />
             </Link>
             <Link
               href="/learn"
@@ -52,11 +52,18 @@ export function HeroSection() {
             >
               {hero.secondaryCta}
             </Link>
+            <a
+              href="#pilot"
+              className="inline-flex h-10 items-center justify-center gap-1.5 self-start rounded-full border border-lex-gold/40 bg-lex-gold/10 px-4 text-sm font-medium text-lex-navy hover:bg-lex-gold/20 sm:self-auto"
+            >
+              <Sparkles className="size-3.5 shrink-0 text-lex-gold" aria-hidden />
+              {hero.pilotCta}
+            </a>
           </div>
         </motion.div>
 
         <motion.div
-          className="relative z-0 order-1 lg:order-2"
+          className="relative z-0 order-1 min-w-0 lg:order-2"
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.65, ease: "easeOut", delay: 0.1 }}

@@ -28,12 +28,16 @@ export const navigation: {
 ] as const;
 
 export const hero = {
-  eyebrow: "BEGINNER-FRIENDLY UK LAW",
-  heading: ["Learn with clarity.", "Apply with confidence."],
+  eyebrow: "EARLY ACCESS · WEEK 5 PILOT",
+  heading: [
+    "A simpler way to understand UK law",
+    "and your everyday legal rights.",
+  ],
   supporting:
-    "Explore civil law, criminal law and everyday legal rights through interactive lessons, real-life examples and quizzes—designed for beginners with no prior legal knowledge.",
-  primaryCta: "Start Learning",
+    "No prior legal knowledge needed. LexLearn explains civil, criminal and everyday topics in plain language — built for young people who want law to feel clear, not intimidating.",
+  primaryCta: "Start a Lesson",
   secondaryCta: "Browse Modules",
+  pilotCta: "Try the Pilot",
 } as const;
 
 export const features = [

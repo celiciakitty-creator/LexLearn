@@ -1,8 +1,28 @@
 # LexLearn
 
-LexLearn is a beginner-friendly UK law learning platform covering **civil law**, **criminal law**, and **everyday legal topics**. Content focuses on the law of **England and Wales** unless a section explicitly states otherwise.
+LexLearn is a **Week 5 startup pilot** — a beginner-friendly UK law learning platform helping young people understand **everyday legal rights** without prior legal knowledge.
+
+**Value proposition:** *A simpler way to understand UK law and your everyday legal rights.*
+
+Content focuses on the law of **England and Wales** unless a section explicitly states otherwise. LexLearn is in **early access** — we are testing with real learners and collecting pilot feedback to shape what comes next.
+
+**Production URL:** set `NEXT_PUBLIC_SITE_URL` in Vercel (e.g. `https://your-app.vercel.app`). Replace this line with your live URL once deployed.
 
 Interactive lessons, realistic scenarios, Case Spotlight and Statute Spotlight explainers, Legal Bites, quizzes, and local progress tracking help learners understand how law applies in everyday life—without replacing professional legal advice.
+
+## Target users
+
+- Young people curious about their rights
+- Prospective and current law students
+- Anyone who wants everyday UK law explained clearly — not like a law firm brochure
+
+## Learning areas
+
+| Area | Topics | Modules |
+|------|--------|---------|
+| **Civil Law** | Contracts, negligence, consumer disputes | 1–2 |
+| **Criminal Law** | Acts, intent, self-defence, offences | 3–4 |
+| **Everyday Law** | Shopping, work, housing, practical rights | 5 |
 
 ## Screenshots
 
@@ -16,7 +36,7 @@ Add production screenshots to `README-assets/` when available:
 | Quiz | `README-assets/quiz.png` | Placeholder — `/quiz/1` |
 | Progress | `README-assets/progress.png` | Placeholder — `/progress` |
 
-**Open Graph image:** Generated at build time by `app/opengraph-image.tsx` (1200×630). Optional: replace with a static marketing asset at `public/images/og-image-marketing.png` and update metadata if a custom designed share image is provided.
+**Open Graph image:** Generated at build time by `app/opengraph-image.tsx` (1200×630).
 
 ## Current features
 
@@ -29,8 +49,23 @@ Add production screenshots to `README-assets/` when available:
 - **Achievements** — stored in browser localStorage (First Lesson, First Quiz, category starters, Five Correct Answers)
 - **Learning levels** — Legal Beginner through LexLearn Scholar
 - **Progress dashboard** at `/progress`
+- **Pilot homepage** — audience section, learning areas, pilot CTA, native feedback form
+- **Pilot feedback UI** — validated via `POST /api/feedback` (central persistence pending backend selection)
+- **Optional market survey CTA** — when `NEXT_PUBLIC_LEXLEARN_SURVEY_URL` is set
 - **Ludwitt OAuth sign-in** — server-managed sessions for tracked lessons and quizzes
 - **Legal disclaimer** on lessons, quizzes, and site footer
+
+## Pilot feedback
+
+Native feedback form at `/#feedback` on the homepage. Submissions are validated server-side but **not centrally stored yet** — persistence is pending after the Week 5 reference API review. See `lib/feedback/` and `POST /api/feedback`.
+
+## Market-validation survey
+
+Optional external survey link via `NEXT_PUBLIC_LEXLEARN_SURVEY_URL`. When unset, survey buttons are hidden. Do not hardcode Google Forms URLs in components.
+
+## Week 5 metrics (pending)
+
+Learning event tracking (`lesson_started`, `lesson_completed`, `quiz_submitted`) is **not implemented**. See [docs/WEEK5_METRICS_PLAN.md](docs/WEEK5_METRICS_PLAN.md) for hook points and identity considerations.
 
 ## Current modules
 
@@ -58,29 +93,21 @@ Add production screenshots to `README-assets/` when available:
 ## Local setup
 
 ```bash
-# Install dependencies
 npm install
-
-# Copy environment template (placeholders only — no secrets)
 cp .env.example .env.local
-
-# Run development server
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
 ```bash
-# Lint
 npm run lint
-
-# Production build
 npm run build
 ```
 
 ## Environment variables
 
-`.env.local` is gitignored. `.env.example` contains **placeholders only** and is safe to commit.
+`.env.local` is gitignored. `.env.example` contains **placeholders only**.
 
 | Variable | Required | Notes |
 |----------|----------|-------|
@@ -89,6 +116,8 @@ npm run build
 | `LUDWITT_REDIRECT_URI` | For OAuth | Must match Ludwitt app registration exactly |
 | `LUDWITT_SESSION_SECRET` | For OAuth | ≥32 characters; encrypts HttpOnly session cookie |
 | `NEXT_PUBLIC_SITE_URL` | Production | Public site URL for metadata/Open Graph (no trailing slash) |
+| `NEXT_PUBLIC_LEXLEARN_SURVEY_URL` | Optional | External market-validation survey; hides CTA when unset |
+| `FEEDBACK_PERSISTENCE_BACKEND` | Optional | Not configured in Week 5 pilot |
 
 ### Callback URL formats
 
@@ -97,56 +126,39 @@ npm run build
 | Local | `http://localhost:3000/auth/callback` |
 | Production | `https://<your-production-domain>/auth/callback` |
 
-OAuth token exchange and authorize redirects use `LUDWITT_REDIRECT_URI` from the environment — there is **no hardcoded localhost URL** in application code.
-
 When Ludwitt env vars are unset, LexLearn runs in local-only mode (progress still uses `localStorage`; auth gates allow access).
 
 ## Deploy to Vercel
 
 1. Push the repository to GitHub or GitLab and import the project in [Vercel](https://vercel.com).
-2. Framework preset: **Next.js** (auto-detected).
-3. Set **Environment Variables** in the Vercel project settings (Production and Preview as needed):
-
-   - `LUDWITT_CLIENT_ID`
-   - `LUDWITT_CLIENT_SECRET`
-   - `LUDWITT_REDIRECT_URI` → `https://<your-production-domain>/auth/callback`
-   - `LUDWITT_SESSION_SECRET`
-   - `NEXT_PUBLIC_SITE_URL` → `https://<your-production-domain>`
-
-4. Register the production callback URL with Ludwitt staff for your OAuth client.
-5. Deploy. Vercel runs `npm run build` automatically.
-
-```bash
-# Optional: deploy from CLI after linking
-npx vercel
-npx vercel --prod
-```
+2. Set environment variables in Vercel (Production and Preview as needed).
+3. Register the production callback URL with Ludwitt staff for your OAuth client.
+4. Deploy.
 
 ### Deployment blockers (known)
 
 | Blocker | Status |
 |---------|--------|
-| Ludwitt OAuth `invalid_client` | **Awaiting platform clarification** — token exchange currently returns `invalid_client` with configured credentials |
+| Ludwitt OAuth `invalid_client` | **Awaiting platform clarification** |
 | Production callback URL | Must be registered with Ludwitt for your deployed domain |
-| Ludwitt AI credit proxy | **Not implemented** — `credits:spend` scope requested at auth but unused |
-| Hult JWT launch / learning events | **Unresolved** — separate from Pitchrise LE OAuth; pending cohort clarification |
+| Week 5 learning events API | **Pending** — reference API review |
+| Feedback central persistence | **Pending** — backend selection after API review |
+| Ludwitt AI credit proxy | **Not implemented** |
 
 ## Project structure
 
 ```
-app/              # Routes (home, learn, quiz, progress, auth)
+app/              # Routes (home, learn, quiz, progress, auth, api/feedback)
 components/       # UI (home, learn, layout)
 hooks/            # useProgress, useAchievements
 lib/
   course/         # Module registry and lesson/quiz content
+  feedback/       # Pilot feedback types, validation, persistence abstraction
   ludwitt/        # OAuth client, PKCE, encrypted session cookie
   achievements/   # Achievement definitions and evaluation
   progress/       # localStorage progress and learning levels
-  legal-facts.ts  # Legal Bites content
-  case-spotlights.ts
-  statute-spotlights.ts
-docs/             # Architecture, content plan, changelog, legal review
-README-assets/    # README screenshot placeholders
+  survey-config.ts
+docs/             # Architecture, Week 5 metrics plan, changelog
 ```
 
 See `docs/ARCHITECTURE.md` for full technical documentation.
@@ -155,11 +167,12 @@ See `docs/ARCHITECTURE.md` for full technical documentation.
 
 | Area | Status |
 |------|--------|
-| All five modules | **Implemented** — lessons + quizzes |
-| Ludwitt OAuth | **Implemented** — sign-in UI and server session; platform `invalid_client` pending |
-| Hult JWT launch / learning events | **Pending** — cohort clarification required |
-| Cross-device progress sync | Not planned for current phase |
-| Legal content review | Modules 2–5 flagged — see `docs/LEGAL_REVIEW.md` |
+| All five modules | **Live** |
+| Week 5 pilot homepage | **Live** |
+| Pilot feedback UI | **Live** — persistence pending |
+| Week 5 metrics events | **Pending** — see `docs/WEEK5_METRICS_PLAN.md` |
+| Ludwitt OAuth | **Implemented** — platform `invalid_client` pending |
+| Hult JWT launch / learning events | **Pending** — separate from Pitchrise OAuth |
 
 ## Disclaimer
 
@@ -168,6 +181,7 @@ LexLearn provides **general educational information about UK law and is not lega
 ## Documentation
 
 - [Architecture](docs/ARCHITECTURE.md)
+- [Week 5 metrics plan](docs/WEEK5_METRICS_PLAN.md)
 - [Content plan](docs/CONTENT_PLAN.md)
 - [Changelog](docs/CHANGELOG.md)
 - [Legal review checklist](docs/LEGAL_REVIEW.md)

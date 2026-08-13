@@ -15,7 +15,7 @@ export function PageShell({
       <SiteHeader />
       <main
         id="main-content"
-        className="min-h-[calc(100vh-var(--site-header-height))]"
+        className="min-h-[calc(100vh-var(--site-header-height))] overflow-x-hidden"
       >
         {children}
       </main>

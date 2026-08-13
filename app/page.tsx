@@ -1,7 +1,14 @@
+import {
+  AudienceSection,
+  HowItWorksSection,
+} from "@/components/home/audience-section";
 import { BenefitsGrid } from "@/components/home/benefits-grid";
 import { CourseModulesList } from "@/components/home/course-modules-list";
 import { FeatureStrip } from "@/components/home/feature-strip";
+import { FeedbackSection } from "@/components/home/feedback-section";
 import { HeroSection } from "@/components/home/hero-section";
+import { LearningAreasSection } from "@/components/home/learning-areas-section";
+import { PilotCtaSection } from "@/components/home/pilot-cta-section";
 import { ProgressSection } from "@/components/home/progress-section";
 import { WhyLearnSection } from "@/components/home/why-learn-section";
 import { CaseSpotlightCard } from "@/components/learn/case-spotlight";
@@ -18,6 +25,9 @@ export default function Home() {
     <PageShell>
       <HeroSection />
       <FeatureStrip />
+      <HowItWorksSection />
+      <AudienceSection />
+      <LearningAreasSection />
       <div className="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8 lg:pb-20">
         <section className="mb-10" aria-labelledby="featured-bite-heading">
           <h2 id="featured-bite-heading" className="sr-only">
@@ -40,14 +50,18 @@ export default function Home() {
           <CaseSpotlightCard spotlight={featuredSpotlight} />
         </section>
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
-          <div>
+          <div className="min-w-0">
             <ProgressSection />
             <BenefitsGrid />
           </div>
-          <CourseModulesList />
+          <div className="min-w-0">
+            <CourseModulesList />
+          </div>
         </div>
       </div>
+      <PilotCtaSection />
       <WhyLearnSection />
+      <FeedbackSection />
     </PageShell>
   );
 }
