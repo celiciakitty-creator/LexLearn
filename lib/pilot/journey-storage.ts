@@ -14,13 +14,20 @@ function dispatchChange(): void {
 
 function readFlag(key: string): boolean {
   if (typeof window === "undefined") return false;
-  return window.localStorage.getItem(key) === "1";
+  const value = window.localStorage.getItem(key);
+  return value === "true" || value === "1";
 }
 
 function writeFlag(key: string, value: boolean): void {
   if (typeof window === "undefined") return;
+
+  const currentlySet = readFlag(key);
+  if (value === currentlySet) {
+    return;
+  }
+
   if (value) {
-    window.localStorage.setItem(key, "1");
+    window.localStorage.setItem(key, "true");
   } else {
     window.localStorage.removeItem(key);
   }
@@ -31,8 +38,13 @@ export function isSurveyCompleted(): boolean {
   return readFlag(SURVEY_COMPLETED_KEY);
 }
 
+export function setSurveyCompleted(completed: boolean): void {
+  writeFlag(SURVEY_COMPLETED_KEY, completed);
+}
+
+/** @deprecated Use setSurveyCompleted(true) */
 export function markSurveyCompleted(): void {
-  writeFlag(SURVEY_COMPLETED_KEY, true);
+  setSurveyCompleted(true);
 }
 
 export function isFeedbackPromptDismissed(): boolean {
@@ -48,8 +60,25 @@ export function isFeedbackCompleted(): boolean {
 }
 
 export function markFeedbackCompleted(): void {
-  writeFlag(FEEDBACK_COMPLETED_KEY, true);
-  writeFlag(FEEDBACK_PROMPT_DISMISSED_KEY, true);
+  if (typeof window === "undefined") return;
+
+  const alreadyComplete = readFlag(FEEDBACK_COMPLETED_KEY);
+  const alreadyDismissed = readFlag(FEEDBACK_PROMPT_DISMISSED_KEY);
+
+  if (alreadyComplete && alreadyDismissed) {
+    return;
+  }
+
+  if (!alreadyComplete) {
+    window.localStorage.setItem(FEEDBACK_COMPLETED_KEY, "true");
+  }
+  if (!alreadyDismissed) {
+    window.localStorage.setItem(FEEDBACK_PROMPT_DISMISSED_KEY, "true");
+  }
+
+  if (!alreadyComplete || !alreadyDismissed) {
+    dispatchChange();
+  }
 }
 
 export function isPilotQuizAttempted(): boolean {
@@ -71,4 +100,13 @@ export function hasMeaningfulPilotActivity(progress: CourseProgress): boolean {
 export function hasAnyPilotEngagement(progress: CourseProgress): boolean {
   if (hasMeaningfulPilotActivity(progress)) return true;
   return Object.values(progress.modules).some((module) => module?.lastVisited);
+}
+
+export function readPilotFlagsSignature(): string {
+  return [
+    isSurveyCompleted() ? "1" : "0",
+    isFeedbackCompleted() ? "1" : "0",
+    isFeedbackPromptDismissed() ? "1" : "0",
+    isPilotQuizAttempted() ? "1" : "0",
+  ].join("|");
 }

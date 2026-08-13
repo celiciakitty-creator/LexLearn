@@ -15,45 +15,57 @@ import {
   isSurveyCompleted,
   markFeedbackCompleted,
   markPilotQuizAttempted,
-  markSurveyCompleted,
   PILOT_JOURNEY_CHANGE_EVENT,
+  readPilotFlagsSignature,
+  setSurveyCompleted,
 } from "@/lib/pilot/journey-storage";
 import {
+  DEFAULT_PROGRESS,
   PROGRESS_CHANGE_EVENT,
   PROGRESS_STORAGE_KEY,
   parseProgress,
 } from "@/lib/progress/storage";
 
-function subscribe(onStoreChange: () => void) {
-  window.addEventListener(PILOT_JOURNEY_CHANGE_EVENT, onStoreChange);
-  window.addEventListener(PROGRESS_CHANGE_EVENT, onStoreChange);
-  window.addEventListener("storage", onStoreChange);
-  return () => {
-    window.removeEventListener(PILOT_JOURNEY_CHANGE_EVENT, onStoreChange);
-    window.removeEventListener(PROGRESS_CHANGE_EVENT, onStoreChange);
-    window.removeEventListener("storage", onStoreChange);
-  };
-}
+export type PilotJourneySnapshot = {
+  progress: CourseProgress;
+  surveyComplete: boolean;
+  learnComplete: boolean;
+  feedbackComplete: boolean;
+  feedbackPromptDismissed: boolean;
+  showFeedbackPrompt: boolean;
+  steps: PilotJourneySteps;
+};
 
-function getSnapshot(): CourseProgress {
-  if (typeof window === "undefined") {
-    return { modules: {} };
+const SERVER_SNAPSHOT: PilotJourneySnapshot = {
+  progress: DEFAULT_PROGRESS,
+  surveyComplete: false,
+  learnComplete: false,
+  feedbackComplete: false,
+  feedbackPromptDismissed: false,
+  showFeedbackPrompt: false,
+  steps: {
+    survey: "current",
+    learn: "not_started",
+    feedback: "not_started",
+  },
+};
+
+let cachedSignature = "";
+let cachedSnapshot: PilotJourneySnapshot = SERVER_SNAPSHOT;
+let cachedProgressRaw: string | null | undefined;
+let cachedProgress: CourseProgress = DEFAULT_PROGRESS;
+
+function getProgressFromRaw(raw: string | null): CourseProgress {
+  if (raw === cachedProgressRaw) {
+    return cachedProgress;
   }
-  return parseProgress(window.localStorage.getItem(PROGRESS_STORAGE_KEY));
+  cachedProgressRaw = raw;
+  cachedProgress = parseProgress(raw);
+  return cachedProgress;
 }
 
-function getServerSnapshot(): CourseProgress {
-  return { modules: {} };
-}
-
-export function usePilotJourney() {
-  const progress = useSyncExternalStore(
-    subscribe,
-    getSnapshot,
-    getServerSnapshot
-  );
-
-  const steps = computePilotJourneySteps(progress);
+function buildSnapshot(progressRaw: string | null): PilotJourneySnapshot {
+  const progress = getProgressFromRaw(progressRaw);
   const surveyComplete = isSurveyCompleted();
   const learnComplete = hasMeaningfulPilotActivity(progress);
   const feedbackComplete = isFeedbackCompleted();
@@ -61,8 +73,55 @@ export function usePilotJourney() {
   const showFeedbackPrompt =
     learnComplete && !feedbackComplete && !feedbackPromptDismissed;
 
-  const completeSurvey = useCallback(() => {
-    markSurveyCompleted();
+  return {
+    progress,
+    surveyComplete,
+    learnComplete,
+    feedbackComplete,
+    feedbackPromptDismissed,
+    showFeedbackPrompt,
+    steps: computePilotJourneySteps(progress),
+  };
+}
+
+function getClientSnapshot(): PilotJourneySnapshot {
+  const progressRaw = window.localStorage.getItem(PROGRESS_STORAGE_KEY);
+  const signature = `${progressRaw ?? ""}::${readPilotFlagsSignature()}`;
+
+  if (signature === cachedSignature) {
+    return cachedSnapshot;
+  }
+
+  cachedSignature = signature;
+  cachedSnapshot = buildSnapshot(progressRaw);
+  return cachedSnapshot;
+}
+
+function getServerSnapshot(): PilotJourneySnapshot {
+  return SERVER_SNAPSHOT;
+}
+
+function subscribe(onStoreChange: () => void) {
+  window.addEventListener(PILOT_JOURNEY_CHANGE_EVENT, onStoreChange);
+  window.addEventListener(PROGRESS_CHANGE_EVENT, onStoreChange);
+  window.addEventListener("storage", onStoreChange);
+
+  return () => {
+    window.removeEventListener(PILOT_JOURNEY_CHANGE_EVENT, onStoreChange);
+    window.removeEventListener(PROGRESS_CHANGE_EVENT, onStoreChange);
+    window.removeEventListener("storage", onStoreChange);
+  };
+}
+
+export function usePilotJourney() {
+  const snapshot = useSyncExternalStore(
+    subscribe,
+    getClientSnapshot,
+    getServerSnapshot
+  );
+
+  const setSurveyComplete = useCallback((completed: boolean) => {
+    setSurveyCompleted(completed);
   }, []);
 
   const dismissPrompt = useCallback(() => {
@@ -78,13 +137,13 @@ export function usePilotJourney() {
   }, []);
 
   return {
-    progress,
-    steps,
-    surveyComplete,
-    learnComplete,
-    feedbackComplete,
-    showFeedbackPrompt,
-    completeSurvey,
+    progress: snapshot.progress,
+    steps: snapshot.steps,
+    surveyComplete: snapshot.surveyComplete,
+    learnComplete: snapshot.learnComplete,
+    feedbackComplete: snapshot.feedbackComplete,
+    showFeedbackPrompt: snapshot.showFeedbackPrompt,
+    setSurveyComplete,
     dismissPrompt,
     completeFeedback,
     recordQuizAttempt,

@@ -6,12 +6,12 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { MotionWrapper } from "@/components/home/motion-wrapper";
 import { SurveyLinkButton } from "@/components/home/survey-link-button";
 import { PilotJourney } from "@/components/pilot/pilot-journey";
-import { SurveyCompleteButton } from "@/components/pilot/survey-complete-button";
+import { SurveyCompleteCheckbox } from "@/components/pilot/survey-complete-checkbox";
 import { usePilotJourney } from "@/hooks/use-pilot-journey";
 import { isSurveyConfigured } from "@/lib/survey-config";
 
 export function PilotCtaSection() {
-  const { steps, surveyComplete, completeSurvey } = usePilotJourney();
+  const { steps, surveyComplete, setSurveyComplete } = usePilotJourney();
   const surveyConfigured = isSurveyConfigured();
 
   return (
@@ -49,16 +49,21 @@ export function PilotCtaSection() {
                 <PilotJourney steps={steps} variant="dark" />
               </div>
 
-              <div className="mt-6 flex flex-col gap-3">
+              <div className="mt-6 flex flex-col gap-4">
                 {surveyConfigured ? (
                   <>
-                    <SurveyLinkButton
-                      variant="on-dark"
-                      className="h-11 w-full justify-center text-base sm:w-auto sm:self-start"
-                    />
-                    <SurveyCompleteButton
-                      completed={surveyComplete}
-                      onComplete={completeSurvey}
+                    <div>
+                      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-lex-gold/90">
+                        Step 1 — Recommended first
+                      </p>
+                      <SurveyLinkButton
+                        variant="on-dark"
+                        className="h-11 w-full justify-center text-base sm:w-auto"
+                      />
+                    </div>
+                    <SurveyCompleteCheckbox
+                      checked={surveyComplete}
+                      onCheckedChange={setSurveyComplete}
                       variant="dark"
                     />
                   </>
@@ -68,9 +73,13 @@ export function PilotCtaSection() {
                   </p>
                 )}
 
-                <div className="mt-2 border-t border-white/10 pt-5">
-                  <p className="text-sm text-white/75">
-                    Already completed it? Start the pilot.
+                <div className="border-t border-white/10 pt-5">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-lex-gold/90">
+                    Step 2 — Try LexLearn
+                  </p>
+                  <p className="mt-2 text-sm text-white/75">
+                    No sign-in required. Start with Module 1 when you&apos;re
+                    ready.
                   </p>
                   <Link
                     href="/learn/pilot"
@@ -84,8 +93,8 @@ export function PilotCtaSection() {
             </div>
 
             <p className="mt-6 text-center text-sm text-white/70">
-              No sign-in required. One lesson and quiz is enough to test the
-              experience — feedback opens after you try it.
+              Step 3 — Share feedback after you try a lesson or quiz. Learning is
+              never blocked by the survey.
             </p>
           </div>
         </div>
