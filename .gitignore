@@ -37,6 +37,8 @@ yarn-error.log*
 # Ludwitt reference docs (downloaded locally)
 .ludwitt/
 
+# Reference API SQLite data (local / mounted volumes)
+
 # vercel
 .vercel
 

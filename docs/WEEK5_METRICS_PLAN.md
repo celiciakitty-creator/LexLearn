@@ -1,103 +1,90 @@
 # Week 5 Metrics Plan
 
-LexLearn will eventually report learning events to the Ludwitt/Hult cohort reference API (`lesson_started`, `lesson_completed`, `quiz_submitted`). **No tracking is implemented in this update** — this document maps where events should fire after the reference API is reviewed.
+LexLearn reports qualifying learning events to the self-hosted **Hult/Ludwitt reference API** via a server-side proxy. OAuth sign-in remains separate; Week 5 counting uses anonymous HttpOnly cookies, not Ludwitt `sub` or PII.
 
-## Qualification events (from cohort spec)
+## Reference API (production)
 
-| Event | When to fire | Minimum bar |
-|-------|--------------|-------------|
-| `lesson_started` | User opens a module lesson | Counts toward user qualification |
-| `lesson_completed` | User finishes a lesson (explicit completion) | Counts toward user qualification |
-| `quiz_submitted` | User submits a module quiz | Counts toward user qualification |
+| Item | Value |
+|------|--------|
+| Base URL | `https://lexlearn-week5-metrics-api.vercel.app` |
+| LexLearn `app_id` | `10af7f09-1664-4ccf-866c-c917dc9d9df2` |
+| Cohort gate | ≥25 **qualified external users** (platform snapshot) |
 
-Page views, homepage visits, and scrolling do **not** qualify. Cohort metrics require server-side events tied to a platform-issued `user_id` and `session_id`.
+## Qualification events
 
-## Current code locations
+| Event | When LexLearn fires it | Counts toward `qualified_users` |
+|-------|------------------------|----------------------------------|
+| `lesson_started` | First open of a module lesson (`LessonView` mount, deduped per module per browser session) | Yes |
+| `lesson_completed` | Learner clicks **Continue to quiz** (deduped per module per session) | Yes |
+| `quiz_submitted` | Every real quiz submit (pass or fail) | Yes |
 
-### `lesson_started`
+**Does not qualify:** homepage views, `/learn` dashboard views, feedback form views, heartbeats, page scroll alone.
 
-**Best hook:** when a learner actually begins a lesson view.
+## Anonymous identity (no PII)
 
-| Location | File | Trigger today |
-|----------|------|---------------|
-| Lesson mount | `components/learn/lesson-view.tsx` | `useEffect` calls `touchModule(lesson.moduleId, {})` on mount — updates `lastVisited` in localStorage only |
-| Route entry | `app/learn/[moduleId]/page.tsx` | Server renders `LessonView` after auth gate |
+| Cookie | Purpose | Flags |
+|--------|---------|--------|
+| `lexlearn_metrics_uid` | Stable anonymous learner id (UUID v4) | HttpOnly, SameSite=Lax, Secure in production, ~1 year |
+| `lexlearn_metrics_sid` | Learning session id (UUID v4) | HttpOnly, SameSite=Lax, Secure in production, ~24h |
 
-**Recommended future trigger:** server-side event in `app/learn/[moduleId]/page.tsx` or a dedicated API route called once per session when `LessonView` mounts, using platform JWT `sub` as `user_id`.
+Created on first qualifying interaction at `POST /api/metrics/events`. Reused across visits (same browser). **No email, name, IP, or Ludwitt OAuth id** is sent as `user_id`.
 
-**Gap:** `touchModule` fires on every remount/navigation; dedupe by `session_id` + `moduleId` will be needed server-side.
+## Server proxy
 
-### `lesson_completed`
+```
+Browser  →  POST /api/metrics/events  { event, metadata }
+         →  LexLearn server (cookies + validation)
+         →  POST {HULT_METRICS_API_BASE_URL}/v1/apps/{HULT_METRICS_APP_ID}/events
+              Authorization: Bearer {HULT_METRICS_DEV_API_KEY}
+              { event, user_id: uid, session_id: sid, metadata }
+```
 
-**Best hook:** when the learner marks a lesson complete.
+Upstream credentials never reach the browser.
 
-| Location | File | Trigger today |
-|----------|------|---------------|
-| Continue to quiz | `components/learn/lesson-view.tsx` | `handleContinue` → `completeLesson(lesson.moduleId)` via link `onClick` to `/quiz/{moduleId}` |
-| Storage | `lib/progress/storage.ts` | `markLessonComplete()` sets `lessonCompleted: true` |
+## Environment variables (server-only)
 
-**Note:** Completion currently happens when the user clicks **Continue to quiz**, not when they scroll to the end. That is a reasonable proxy for “finished reading” but should be documented for metrics consistency.
+| Variable | Purpose |
+|----------|---------|
+| `HULT_METRICS_API_BASE_URL` | Reference API origin |
+| `HULT_METRICS_APP_ID` | Registered LexLearn app id |
+| `HULT_METRICS_DEV_API_KEY` | Developer bearer token for event ingestion |
 
-**Also sets `lessonCompleted` on quiz pass:** `markQuizComplete()` in `lib/progress/storage.ts` sets `lessonCompleted: true` again — do not double-fire `lesson_completed` if already sent at continue-click.
+Set these in **LexLearn Vercel** project settings (not `NEXT_PUBLIC_*`).
 
-### `quiz_submitted`
+## Verification
 
-**Best hook:** when the user submits answers (regardless of pass/fail).
+```bash
+npm run metrics:check
+```
 
-| Location | File | Trigger today |
-|----------|------|---------------|
-| Submit handler | `components/learn/quiz-view.tsx` | `handleSubmit()` → `setSubmitted(true)`, `recordQuizAttempt(finalScore)` |
-| Pass only | `components/learn/quiz-view.tsx` | `completeQuiz()` only if `finalScore >= quiz.passThreshold` |
+Prints `unique_users` and `qualified_users` from the reference API (requires env vars in `.env.local`).
 
-**Recommended future trigger:** fire `quiz_submitted` on every submit in `handleSubmit`, not only on pass. Pass/fail can live in event `metadata`.
+### Manual Week 5 proof (local or production)
 
-## Anonymous and external users today
+1. Confirm baseline `0 / 0` via `npm run metrics:check`.
+2. Open an **incognito** browser → visit LexLearn.
+3. Open **exactly one** lesson → continue to quiz optional.
+4. Run `npm run metrics:check` → expect `unique_users: 1`, `qualified_users: 1`.
+5. Submit a quiz in the same browser → `qualified_users` stays `1` for that uid.
+6. Repeat in a second incognito window → counts should increase for a second distinct uid.
 
-| Identity source | Where | Stable ID? |
-|-----------------|-------|------------|
-| **None (anonymous)** | Default when Ludwitt OAuth not configured or user not signed in | No platform `user_id` — only browser localStorage |
-| **Ludwitt OAuth `sub`** | `lib/ludwitt/session.ts` → `/api/auth/me` | Stable per Ludwitt account when signed in |
-| **localStorage progress** | `lexlearn-course-progress-v1` | Device-local only; not suitable as cohort `user_id` |
+Staff snapshot: `GET /v1/admin/cohorts/{cohort_id}/snapshots/{date}` on the reference API (admin key server-side only).
 
-### Issues for stable external user IDs
+## Code map
 
-1. **Anonymous learners** have no server-known identity — Week 5 counting requires users entering via the platform launcher with a JWT (`sub` in payload per Hult integration spec).
-2. **Pitchrise OAuth `sub`** and **Hult JWT `sub`** may be different surfaces — confirm with cohort staff whether OAuth sign-in satisfies the launcher requirement or if a separate `/launch?token=` flow is mandatory.
-3. **localStorage progress** cannot be used to dedupe users across devices or attribute events to platform roster.
-4. **Auth gates** (`components/learn/ludwitt-auth-gate.tsx`) require sign-in when OAuth is configured, but signed-in users are still not linked to Hult metrics until JWT launch + events API exist.
+| Event | File | Hook |
+|-------|------|------|
+| `lesson_started` | `components/learn/lesson-view.tsx` | `useEffect` + `sessionStorage` dedupe |
+| `lesson_completed` | `components/learn/lesson-view.tsx` | `handleContinue` before quiz navigation |
+| `quiz_submitted` | `components/learn/quiz-view.tsx` | `handleSubmit` on every submission |
+| Proxy | `app/api/metrics/events/route.ts` | Validates, cookies, forwards |
+| Upstream client | `lib/metrics/upstream.ts` | Server-only fetch |
+| Client helper | `lib/metrics/track-client.ts` | Fire-and-forget fetch to proxy |
 
-## Recommended implementation order (after API review)
+## Failure behavior
 
-1. Add `/launch` route — validate Hult JWT, establish server session with platform `user_id`.
-2. Create `lib/metrics/events.ts` — typed client for `POST /v1/apps/{app_id}/events`.
-3. Fire `lesson_started` once per lesson session (dedupe in session cookie or server).
-4. Fire `lesson_completed` from `completeLesson` path (client calls server route; server forwards event).
-5. Fire `quiz_submitted` from `handleSubmit` (always, not only on pass).
-6. Never count page views or localStorage-only actions.
+If the reference API is down or env vars are missing, learners continue normally. The proxy returns `202` with `{ ok: true, tracked: false }` when forwarding fails; the client ignores errors silently.
 
-## Components to touch later
+## OAuth vs metrics
 
-| Component / module | Event |
-|--------------------|-------|
-| `components/learn/lesson-view.tsx` | `lesson_started`, `lesson_completed` |
-| `components/learn/quiz-view.tsx` | `quiz_submitted` |
-| `lib/progress/storage.ts` | Optional central hook point (prefer explicit calls in views to avoid storage-layer side effects) |
-| New: `app/launch/route.ts` or `app/launch/page.tsx` | JWT validation, session bootstrap |
-| New: `app/api/metrics/events/route.ts` | Server-side proxy to Hult API (keeps `api_key` secret) |
-| `lib/ludwitt/session.ts` | May supply `user_id` if OAuth and Hult IDs align — confirm first |
-
-## Why page views alone should not count
-
-Cohort pass gates require **qualified users** with at least one non-heartbeat learning event (`lesson_started`, `lesson_completed`, or sustained `session_heartbeat`). Raw traffic:
-
-- Can be bots, cohort members (blocklisted), or accidental clicks.
-- Does not prove engagement with learning content.
-- Cannot be verified server-side if fired only from the browser without platform auth.
-
-Server-side events with platform-issued `user_id` are the canonical metric per `hult-cohort-program` integration spec.
-
-## Out of scope for this document
-
-- Feedback persistence (`/api/feedback`) — separate backend decision.
-- Ludwitt AI credit proxy — unrelated to cohort user counts.
-- Fake counters or client-side “user count” UI — intentionally not added.
+Ludwitt OAuth (`lib/ludwitt/`) is unchanged. When OAuth is configured, lessons still require sign-in for **local progress**, but Week 5 **platform metrics** use cookie-based anonymous ids independent of OAuth.

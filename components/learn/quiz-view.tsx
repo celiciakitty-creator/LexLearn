@@ -6,6 +6,7 @@ import { ArrowRight, BookOpen, Trophy } from "lucide-react";
 import { LegalDisclaimer } from "@/components/layout/legal-disclaimer";
 import { Button } from "@/components/ui/button";
 import type { QuizContent } from "@/lib/course/types";
+import { trackMetricsEvent } from "@/lib/metrics/track-client";
 import { recordQuizAttempt } from "@/lib/progress/storage";
 import { useProgress } from "@/hooks/use-progress";
 import { cn } from "@/lib/utils";
@@ -44,6 +45,11 @@ export function QuizView({ quiz }: QuizViewProps) {
     }, 0);
     setSubmitted(true);
     recordQuizAttempt(finalScore);
+    trackMetricsEvent("quiz_submitted", {
+      module_id: quiz.moduleId,
+      score: finalScore,
+      total: quiz.questions.length,
+    });
     if (finalScore >= quiz.passThreshold) {
       completeQuiz(quiz.moduleId, finalScore, quiz.questions.length);
     }

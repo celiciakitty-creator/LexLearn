@@ -63,9 +63,19 @@ Native feedback form at `/#feedback` on the homepage. Submissions are validated 
 
 Optional external survey link via `NEXT_PUBLIC_LEXLEARN_SURVEY_URL`. When unset, survey buttons are hidden. Do not hardcode Google Forms URLs in components.
 
-## Week 5 metrics (pending)
+## Week 5 metrics
 
-Learning event tracking (`lesson_started`, `lesson_completed`, `quiz_submitted`) is **not implemented**. See [docs/WEEK5_METRICS_PLAN.md](docs/WEEK5_METRICS_PLAN.md) for hook points and identity considerations.
+LexLearn reports qualifying learning events to the production reference API via a **server-side proxy** (`POST /api/metrics/events`). Anonymous HttpOnly cookies (`lexlearn_metrics_uid`, `lexlearn_metrics_sid`) identify learners without PII. OAuth sign-in is unchanged and independent.
+
+| Variable | Required | Notes |
+|----------|----------|-------|
+| `HULT_METRICS_API_BASE_URL` | For metrics | Server-only; default `https://lexlearn-week5-metrics-api.vercel.app` |
+| `HULT_METRICS_APP_ID` | For metrics | Server-only; LexLearn registered app id |
+| `HULT_METRICS_DEV_API_KEY` | For metrics | Server-only developer bearer token — never `NEXT_PUBLIC_*` |
+
+Check counts locally: `npm run metrics:check` (prints `unique_users` / `qualified_users` only).
+
+See [docs/WEEK5_METRICS_PLAN.md](docs/WEEK5_METRICS_PLAN.md) for qualification rules and proof process.
 
 ## Current modules
 
@@ -117,6 +127,9 @@ npm run build
 | `LUDWITT_SESSION_SECRET` | For OAuth | ≥32 characters; encrypts HttpOnly session cookie |
 | `NEXT_PUBLIC_SITE_URL` | Production | Public site URL for metadata/Open Graph (no trailing slash) |
 | `NEXT_PUBLIC_LEXLEARN_SURVEY_URL` | Optional | External market-validation survey; hides CTA when unset |
+| `HULT_METRICS_API_BASE_URL` | For metrics | Server-only reference API origin |
+| `HULT_METRICS_APP_ID` | For metrics | Server-only registered LexLearn app id |
+| `HULT_METRICS_DEV_API_KEY` | For metrics | Server-only developer API key |
 | `FEEDBACK_PERSISTENCE_BACKEND` | Optional | Not configured in Week 5 pilot |
 
 ### Callback URL formats
@@ -141,7 +154,7 @@ When Ludwitt env vars are unset, LexLearn runs in local-only mode (progress stil
 |---------|--------|
 | Ludwitt OAuth `invalid_client` | **Awaiting platform clarification** |
 | Production callback URL | Must be registered with Ludwitt for your deployed domain |
-| Week 5 learning events API | **Pending** — reference API review |
+| Week 5 learning events API | **Implemented** — proxy + anonymous cookies |
 | Feedback central persistence | **Pending** — backend selection after API review |
 | Ludwitt AI credit proxy | **Not implemented** |
 
@@ -155,6 +168,7 @@ lib/
   course/         # Module registry and lesson/quiz content
   feedback/       # Pilot feedback types, validation, persistence abstraction
   ludwitt/        # OAuth client, PKCE, encrypted session cookie
+  metrics/        # Week 5 anonymous metrics (cookies, proxy client, validation)
   achievements/   # Achievement definitions and evaluation
   progress/       # localStorage progress and learning levels
   survey-config.ts
@@ -170,7 +184,7 @@ See `docs/ARCHITECTURE.md` for full technical documentation.
 | All five modules | **Live** |
 | Week 5 pilot homepage | **Live** |
 | Pilot feedback UI | **Live** — persistence pending |
-| Week 5 metrics events | **Pending** — see `docs/WEEK5_METRICS_PLAN.md` |
+| Week 5 metrics events | **Live** — see `docs/WEEK5_METRICS_PLAN.md` |
 | Ludwitt OAuth | **Implemented** — platform `invalid_client` pending |
 | Hult JWT launch / learning events | **Pending** — separate from Pitchrise OAuth |
 

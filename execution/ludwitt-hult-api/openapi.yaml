@@ -1,0 +1,122 @@
+openapi: 3.1.0
+info:
+  title: Ludwitt/Hult Learning Platform API
+  version: 0.2.0
+  description: >-
+    Cohort 1 MVP — student learning app integration.
+    This describes a REFERENCE IMPLEMENTATION, not a hosted service: no public
+    host is operated from this spec. Run the server yourself (npm run dev, or
+    deploy it) and point your client at that instance. Earlier versions listed
+    api.ludwitt.hult and sandbox.api.ludwitt.hult as servers — those hosts have
+    never existed and any client generated against them will fail to connect.
+
+servers:
+  - url: http://localhost:4000/v1
+    description: Reference implementation running locally (npm run dev)
+  - url: '{instanceBaseUrl}/v1'
+    description: Your own deployed instance of the reference implementation
+    variables:
+      instanceBaseUrl:
+        default: http://localhost:4000
+        description: Scheme and host of the instance you deployed, no trailing slash
+
+paths:
+  /developer/apps:
+    post:
+      summary: Register a learning app
+      security:
+        - DeveloperKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title, description, topic, launch_url, repo_url]
+              properties:
+                title: { type: string }
+                description: { type: string, minLength: 100 }
+                topic: { type: string }
+                icon_url: { type: string, format: uri }
+                launch_url: { type: string, format: uri }
+                repo_url: { type: string, format: uri }
+      responses:
+        '201':
+          description: App registered (pending review)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppCredentials'
+
+  /apps/{app_id}/events:
+    post:
+      summary: Record a learning event
+      security:
+        - DeveloperKey: []
+      parameters:
+        - name: app_id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LearningEvent'
+      responses:
+        '202':
+          description: Event accepted
+
+  /apps/{app_id}/metrics:
+    get:
+      summary: Get unique user counts for app
+      security:
+        - DeveloperKey: []
+      parameters:
+        - name: app_id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: as_of
+          in: query
+          schema: { type: string, format: date-time }
+      responses:
+        '200':
+          description: Metrics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  unique_users: { type: integer }
+                  qualified_users: { type: integer }
+
+components:
+  securitySchemes:
+    DeveloperKey:
+      type: http
+      scheme: bearer
+
+  schemas:
+    AppCredentials:
+      type: object
+      properties:
+        app_id: { type: string, format: uuid }
+        api_key: { type: string }
+        jwt_secret: { type: string }
+
+    LearningEvent:
+      type: object
+      required: [event, user_id, session_id]
+      properties:
+        event:
+          type: string
+          enum:
+            - lesson_started
+            - lesson_completed
+            - quiz_submitted
+            - session_heartbeat
+        user_id: { type: string, format: uuid }
+        session_id: { type: string, format: uuid }
+        metadata: { type: object }

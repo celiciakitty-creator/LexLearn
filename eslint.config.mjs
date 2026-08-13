@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Separate Hult/Ludwitt reference API (Express; own npm test workflow)
+    "execution/ludwitt-hult-api/**",
   ]),
 ]);
 

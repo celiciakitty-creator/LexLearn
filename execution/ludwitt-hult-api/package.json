@@ -1,0 +1,66 @@
+{
+
+  "name": "ludwitt-hult-api",
+
+  "version": "0.1.0",
+
+  "license": "MIT",
+
+  "private": true,
+
+  "type": "module",
+
+  "engines": {
+
+    "node": ">=20.0.0"
+
+  },
+
+  "scripts": {
+
+    "dev": "node src/index.js",
+
+    "start": "node src/index.js",
+
+    "test": "node --test tests/api.test.js",
+
+    "test:integration": "node --env-file=.env --test tests/integration.test.js",
+
+    "supabase": "npx supabase",
+
+    "db:push": "npx supabase db push",
+
+    "db:status": "npx supabase migration list",
+
+    "db:verify": "node scripts/verify-supabase-schema.mjs",
+
+    "env:from-cli": "node scripts/write-env-from-cli.mjs"
+
+  },
+
+  "dependencies": {
+
+    "@supabase/supabase-js": "^2.49.1",
+
+    "express": "^4.21.0",
+
+    "jsonwebtoken": "^9.0.2",
+
+    "uuid": "^11.0.3"
+
+  },
+
+  "devDependencies": {
+
+    "@railway/cli": "^5.40.1"
+
+  },
+
+  "allowScripts": {
+
+    "@railway/cli@5.40.1": true
+
+  }
+
+}
+

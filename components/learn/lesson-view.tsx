@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight, BookOpen } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { CategoryBadge } from "@/components/learn/category-badge";
 import { CaseSpotlightCard } from "@/components/learn/case-spotlight";
@@ -13,6 +13,11 @@ import { LegalDisclaimer } from "@/components/layout/legal-disclaimer";
 import { getCaseSpotlight } from "@/lib/case-spotlights";
 import { getModuleMeta } from "@/lib/course/index";
 import type { LessonContent } from "@/lib/course/types";
+import {
+  hasMetricsEventFired,
+  markMetricsEventFired,
+  trackMetricsEvent,
+} from "@/lib/metrics/track-client";
 import { getStatuteSpotlight } from "@/lib/statute-spotlights";
 import { useProgress } from "@/hooks/use-progress";
 
@@ -30,11 +35,30 @@ export function LessonView({ lesson }: LessonViewProps) {
     ? getStatuteSpotlight(lesson.statuteSpotlightId)
     : undefined;
 
+  const startedRef = useRef(false);
+
   useEffect(() => {
     touchModule(lesson.moduleId, {});
   }, [lesson.moduleId, touchModule]);
 
+  useEffect(() => {
+    if (startedRef.current) {
+      return;
+    }
+    if (hasMetricsEventFired("lesson_started", lesson.moduleId)) {
+      startedRef.current = true;
+      return;
+    }
+    startedRef.current = true;
+    markMetricsEventFired("lesson_started", lesson.moduleId);
+    trackMetricsEvent("lesson_started", { module_id: lesson.moduleId });
+  }, [lesson.moduleId]);
+
   const handleContinue = () => {
+    if (!hasMetricsEventFired("lesson_completed", lesson.moduleId)) {
+      markMetricsEventFired("lesson_completed", lesson.moduleId);
+      trackMetricsEvent("lesson_completed", { module_id: lesson.moduleId });
+    }
     completeLesson(lesson.moduleId);
   };
 

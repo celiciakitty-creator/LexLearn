@@ -1,0 +1,13 @@
+services:
+  api:
+    build: .
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - ADMIN_KEY=${ADMIN_KEY:-dev-admin-key}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - HULT_DEV_API_KEY=${HULT_DEV_API_KEY:-prod_key_demo}
+      - HULT_DEVELOPER_HANDLE=${HULT_DEVELOPER_HANDLE:-student-demo}
+    restart: unless-stopped

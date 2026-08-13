@@ -1,0 +1,14 @@
+# Environment files
+.env
+.env.local
+.env.supabase.local
+.env.production.local
+.env.vercel.check
+.lexlearn-registration.local.json
+.supabase-db-password.local
+
+# Dependencies
+node_modules/
+
+.vercel
+.env*

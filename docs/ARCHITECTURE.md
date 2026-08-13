@@ -131,13 +131,40 @@ Brand tokens in `app/globals.css`: `lex-navy`, `lex-pale`, `lex-surface`, `lex-g
 
 ## Not yet implemented
 
-- Week 5 learning event tracking (`lesson_started`, `lesson_completed`, `quiz_submitted`) — see `docs/WEEK5_METRICS_PLAN.md`
 - Pilot feedback central persistence — `FEEDBACK_PERSISTENCE_BACKEND` not configured
 - Ludwitt AI credit proxy and `credits:spend` usage
-- Hult cohort JWT launch and learning event tracking (pending reference API review)
+- Hult cohort JWT launch (pending platform registration)
 - Production Ludwitt callback URL registration for deployed domain
 - Persistent server-side token store (database) for multi-instance deployments
 - Cross-device progress sync
+
+## Week 5 metrics (reference API)
+
+LexLearn reports qualifying events to the deployed Hult/Ludwitt reference API via a server-side proxy. OAuth and metrics are independent.
+
+### Identity
+
+| Cookie | Role |
+|--------|------|
+| `lexlearn_metrics_uid` | Anonymous learner id (UUID v4, HttpOnly, ~1 year) |
+| `lexlearn_metrics_sid` | Session id (UUID v4, HttpOnly, ~24h) |
+
+No PII (email, name, IP, Ludwitt `sub`) is used for metrics `user_id`.
+
+### Proxy route
+
+- `POST /api/metrics/events` — client sends `{ event, metadata }`; server adds uid/sid and forwards with `HULT_METRICS_DEV_API_KEY`
+- `lib/metrics/` — config, cookies, validation, upstream client, client helper
+
+### Qualifying events
+
+| Event | Component | Trigger |
+|-------|-----------|---------|
+| `lesson_started` | `lesson-view.tsx` | Lesson mount (sessionStorage dedupe) |
+| `lesson_completed` | `lesson-view.tsx` | Continue to quiz |
+| `quiz_submitted` | `quiz-view.tsx` | Every quiz submit |
+
+Verification: `npm run metrics:check`. Full plan: `docs/WEEK5_METRICS_PLAN.md`.
 
 ## Pilot feedback
 

@@ -17,6 +17,15 @@ All notable changes to LexLearn are documented here.
 - **Week 5 metrics plan** — `docs/WEEK5_METRICS_PLAN.md` (hook points only; no tracking implemented)
 - **Mobile overflow guard** — `overflow-x-hidden` on main content shell
 
+### Added (Week 5 metrics integration)
+
+- **Anonymous metrics identity** — HttpOnly cookies `lexlearn_metrics_uid` (~1 year) and `lexlearn_metrics_sid` (~24h); no PII
+- **Server proxy** — `POST /api/metrics/events` forwards qualifying events to the Hult/Ludwitt reference API with server-side bearer auth
+- **Event hooks** — `lesson_started` / `lesson_completed` in `LessonView`; `quiz_submitted` in `QuizView`
+- **Strict Mode dedupe** — `sessionStorage` + ref guard for `lesson_started` per module
+- **CLI verification** — `npm run metrics:check` prints `unique_users` and `qualified_users` only
+- **Environment variables** — `HULT_METRICS_API_BASE_URL`, `HULT_METRICS_APP_ID`, `HULT_METRICS_DEV_API_KEY` (server-only)
+
 ### Added (Ludwitt OAuth — prior)
 - **Encrypted HttpOnly session cookie** — server-managed tokens; `/api/auth/me` returns public profile only
 - **Auth header** — “Sign in with Ludwitt”, learner name/avatar, logout action

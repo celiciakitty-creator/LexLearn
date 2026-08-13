@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { LogOut } from "lucide-react";
 
@@ -57,28 +56,12 @@ export function AuthHeaderActions({ className }: { className?: string }) {
     };
   }, []);
 
-  if (auth.status === "loading" || auth.status === "unconfigured") {
-    if (auth.status === "unconfigured") return null;
-    return (
-      <div
-        className={cn("h-9 w-28 animate-pulse rounded-lg bg-lex-pale", className)}
-        aria-hidden
-      />
-    );
-  }
-
-  if (auth.status === "guest") {
-    return (
-      <Link
-        href="/auth/login"
-        className={cn(
-          "inline-flex h-9 items-center justify-center rounded-lg bg-lex-navy px-4 text-sm font-medium text-white shadow-sm hover:bg-lex-navy/90",
-          className
-        )}
-      >
-        Sign in with Ludwitt
-      </Link>
-    );
+  if (
+    auth.status === "loading" ||
+    auth.status === "unconfigured" ||
+    auth.status === "guest"
+  ) {
+    return null;
   }
 
   const displayName = auth.user.name ?? auth.user.email ?? "Learner";
