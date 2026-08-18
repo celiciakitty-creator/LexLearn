@@ -24,7 +24,7 @@ export function HeroSection() {
           className="relative z-10 order-2 min-w-0 lg:order-1"
           initial={false}
         >
-          <p className="mb-4 text-xs font-semibold tracking-[0.2em] text-lex-gold">
+          <p className="mb-4 lex-eyebrow">
             {hero.eyebrow}
           </p>
           <h1
@@ -35,26 +35,26 @@ export function HeroSection() {
             <br />
             <span className="italic">{hero.heading[1]}</span>
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-lex-navy/75 sm:text-lg">
+          <p className="mt-5 max-w-xl lex-body sm:text-lg">
             {hero.supporting}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <Link
               href={continueHref}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-lex-brand px-6 text-base font-medium text-white shadow-md hover:bg-lex-brand/90"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-lex-brand px-6 text-base font-medium text-white shadow-md hover:bg-lex-brand/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lex-gold/50 focus-visible:ring-offset-2"
             >
               {hero.primaryCta}
               <ArrowRight className="size-4 shrink-0" aria-hidden />
             </Link>
             <Link
               href="/learn"
-              className="inline-flex h-11 items-center justify-center rounded-lg border border-lex-navy/20 bg-white px-6 text-base font-medium text-lex-navy shadow-sm hover:bg-lex-pale"
+              className="lex-btn-secondary h-11 px-6 text-base"
             >
               {hero.secondaryCta}
             </Link>
             <a
               href="#pilot"
-              className="inline-flex h-10 items-center justify-center gap-1.5 self-start rounded-full border border-lex-gold/40 bg-lex-gold/10 px-4 text-sm font-medium text-lex-navy hover:bg-lex-gold/20 sm:self-auto"
+              className="inline-flex h-10 items-center justify-center gap-1.5 self-start rounded-full border border-lex-gold/40 bg-lex-gold/10 px-4 text-sm font-medium text-lex-navy hover:bg-lex-gold/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lex-gold/40 dark:text-lex-navy sm:self-auto"
             >
               <Sparkles className="size-3.5 shrink-0 text-lex-gold" aria-hidden />
               {hero.pilotCta}

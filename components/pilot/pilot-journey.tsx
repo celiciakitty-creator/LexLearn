@@ -29,11 +29,11 @@ function stepStyles(state: JourneyStepState, variant: PilotJourneyProps["variant
   if (state === "current") {
     return onDark
       ? "border-white/40 bg-white/15 text-white ring-1 ring-lex-gold/40"
-      : "border-lex-navy/20 bg-white text-lex-navy ring-1 ring-lex-gold/30 shadow-sm";
+      : "border-lex-navy/20 bg-white text-lex-navy ring-1 ring-lex-gold/30 shadow-sm dark:bg-lex-card";
   }
   return onDark
-    ? "border-white/10 bg-white/5 text-white/55"
-    : "border-lex-navy/8 bg-lex-pale/30 text-lex-navy/45";
+    ? "border-white/10 bg-white/5 text-white/70"
+    : "border-lex-navy/8 bg-lex-pale/30 text-lex-faint dark:text-lex-subtle";
 }
 
 export function PilotJourney({
@@ -71,11 +71,11 @@ export function PilotJourney({
                         : "bg-lex-gold text-lex-navy"
                       : state === "current"
                         ? onDark
-                          ? "bg-white text-lex-navy"
+                          ? "bg-white text-[#1e3a5f]"
                           : "bg-lex-brand text-white"
                         : onDark
-                          ? "bg-white/10 text-white/60"
-                          : "bg-lex-navy/8 text-lex-navy/50"
+                          ? "bg-white/10 text-white/75"
+                          : "bg-lex-navy/8 text-lex-subtle"
                   )}
                   aria-hidden
                 >
@@ -94,7 +94,7 @@ export function PilotJourney({
                     <p
                       className={cn(
                         "hidden text-[0.65rem] sm:block",
-                        onDark ? "text-white/70" : "text-lex-navy/55"
+                        onDark ? "text-white/80" : "text-lex-subtle"
                       )}
                     >
                       Current step
@@ -111,8 +111,8 @@ export function PilotJourney({
                           ? "text-lex-gold"
                           : "text-lex-navy"
                         : onDark
-                          ? "text-white/40"
-                          : "text-lex-navy/30"
+                          ? "text-white/55"
+                          : "text-lex-faint"
                   )}
                   aria-hidden
                 />

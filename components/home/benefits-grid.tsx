@@ -18,13 +18,13 @@ export function BenefitsGrid() {
             <li key={benefit.title}>
               <MotionHover>
                 <MotionWrapper delay={0.04 * index}>
-                  <article className="flex h-full gap-4 rounded-xl border border-lex-navy/10 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-lex-pale text-lex-navy">
+                  <article className="lex-surface-card-sm flex h-full gap-4 p-5 transition-shadow hover:shadow-md dark:hover:shadow-none">
+                    <span className="lex-icon-well size-10 shrink-0">
                       <benefit.icon className="size-5" strokeWidth={1.75} aria-hidden />
                     </span>
                     <div>
                       <h3 className="font-medium text-lex-navy">{benefit.title}</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-lex-navy/65">
+                      <p className="mt-1 lex-body-sm">
                         {benefit.description}
                       </p>
                     </div>

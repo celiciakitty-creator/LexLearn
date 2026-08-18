@@ -40,7 +40,7 @@ export function LearningAreasSection() {
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-lex-gold">
+            <p className="lex-eyebrow">
               Three learning areas
             </p>
             <h2
@@ -49,7 +49,7 @@ export function LearningAreasSection() {
             >
               Start with the basics
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-lex-navy/75">
+            <p className="mt-4 lex-body">
               LexLearn currently focuses on law applicable primarily to{" "}
               <strong className="font-medium text-lex-navy">
                 England and Wales
@@ -67,8 +67,8 @@ export function LearningAreasSection() {
                 <li key={category} className="min-w-0">
                   <MotionHover>
                     <MotionWrapper delay={index * 0.05}>
-                      <article className="flex h-full flex-col rounded-2xl border border-lex-navy/10 bg-white p-5 shadow-sm sm:p-6">
-                        <span className="flex size-11 items-center justify-center rounded-lg bg-lex-pale text-lex-navy ring-1 ring-lex-navy/8">
+                      <article className="lex-surface-card flex h-full flex-col p-5 sm:p-6">
+                        <span className="lex-icon-well size-11">
                           <Icon
                             className="size-5"
                             strokeWidth={1.75}
@@ -78,7 +78,7 @@ export function LearningAreasSection() {
                         <h3 className="mt-4 font-serif text-xl font-semibold text-lex-navy">
                           {category}
                         </h3>
-                        <p className="mt-2 flex-1 text-sm leading-relaxed text-lex-navy/70">
+                        <p className="mt-2 flex-1 lex-body-sm">
                           {detail.description}
                         </p>
                         <p className="mt-4 text-xs font-medium uppercase tracking-wide text-lex-gold">
@@ -95,7 +95,7 @@ export function LearningAreasSection() {
           <div className="mt-8">
             <Link
               href="/learn"
-              className="inline-flex h-11 items-center justify-center rounded-lg border border-lex-navy/20 bg-white px-6 text-sm font-medium text-lex-navy shadow-sm hover:bg-lex-pale"
+              className="lex-btn-secondary h-11 px-6 text-sm"
             >
               Browse all modules
             </Link>

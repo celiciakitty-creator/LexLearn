@@ -19,12 +19,12 @@ export function CaseSpotlightCard({
   return (
     <article
       className={cn(
-        "overflow-hidden rounded-2xl border border-lex-navy/10 bg-white shadow-sm",
+        "lex-surface-card overflow-hidden shadow-sm",
         className
       )}
       aria-labelledby={`case-spotlight-${spotlight.id}`}
     >
-      <div className="border-b border-lex-navy/8 bg-gradient-to-r from-lex-pale/80 to-white px-5 py-4 sm:px-6">
+      <div className="lex-card-header-band bg-gradient-to-r from-lex-pale/80 to-white px-5 py-4 dark:from-lex-pale/60 dark:to-lex-card sm:px-6">
         <div className="flex items-start gap-3">
           <span
             className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-lex-brand text-white ring-1 ring-lex-navy/20"
@@ -57,7 +57,7 @@ export function CaseSpotlightCard({
           >
             Why it matters
           </h3>
-          <p className="mt-2 text-sm leading-relaxed text-lex-navy/80">
+          <p className="mt-2 lex-body-sm">
             {spotlight.whyItMatters}
           </p>
         </section>
@@ -69,7 +69,7 @@ export function CaseSpotlightCard({
           >
             Beginner explanation
           </h3>
-          <p className="mt-2 text-sm leading-relaxed text-lex-navy/75">
+          <p className="mt-2 lex-body-sm">
             {spotlight.explanation}
           </p>
         </section>
@@ -77,7 +77,7 @@ export function CaseSpotlightCard({
         {showLearnMore && spotlight.learnMoreHref && (
           <Link
             href={spotlight.learnMoreHref}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-lex-navy underline-offset-4 hover:underline"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-lex-navy underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lex-gold/40"
           >
             Learn more
             <ArrowRight className="size-4" aria-hidden />
@@ -85,7 +85,7 @@ export function CaseSpotlightCard({
         )}
 
         {showLearnMore && !spotlight.learnMoreHref && (
-          <p className="text-sm text-lex-navy/50">
+          <p className="text-sm text-lex-subtle">
             Learn more — coming soon
           </p>
         )}

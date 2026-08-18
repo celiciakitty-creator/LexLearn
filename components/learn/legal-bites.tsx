@@ -87,7 +87,7 @@ export function LegalBites({
       aria-labelledby={`legal-bite-${fact.id}`}
     >
       {showCategoryFilter && (
-        <div className="flex flex-wrap gap-2 border-b border-lex-navy/8 bg-white/60 px-4 py-3 dark:bg-lex-card/60 sm:px-5">
+        <div className="lex-panel-soft flex flex-wrap gap-2 border-b border-lex-navy/8 px-4 py-3 sm:px-5">
           <CategoryFilterButton
             active={activeCategory === "All"}
             onClick={() => handleCategoryChange("All")}
@@ -121,8 +121,8 @@ export function LegalBites({
               className={cn(
                 "flex size-11 shrink-0 items-center justify-center rounded-xl ring-1",
                 variant === "featured"
-                  ? "bg-white text-lex-gold ring-lex-gold/30"
-                  : "bg-white text-lex-navy ring-lex-navy/10"
+                  ? "bg-white text-lex-gold ring-lex-gold/30 dark:bg-lex-card"
+                  : "bg-white text-lex-navy ring-lex-navy/10 dark:bg-lex-card"
               )}
               aria-hidden
             >
@@ -144,10 +144,10 @@ export function LegalBites({
               >
                 {fact.shortTitle}
               </h2>
-              <p className="mt-3 text-sm leading-relaxed text-lex-navy/85">
+              <p className="mt-3 lex-body-sm text-lex-navy">
                 {fact.fact}
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-lex-navy/70">
+              <p className="mt-3 lex-body-sm">
                 {fact.explanation}
               </p>
               <LegalDisclaimer className="mt-4" />
@@ -157,23 +157,23 @@ export function LegalBites({
       </div>
 
       {filteredFacts.length > 1 && (
-        <div className="flex items-center justify-between border-t border-lex-navy/8 bg-white/50 px-4 py-3">
+        <div className="lex-panel-faint flex items-center justify-between border-t border-lex-navy/8 px-4 py-3">
           <button
             type="button"
             onClick={() => goTo(safeIndex - 1, -1)}
-            className="inline-flex items-center gap-1 rounded-md px-2 py-1.5 text-sm font-medium text-lex-navy/70 hover:bg-lex-pale hover:text-lex-navy"
+            className="inline-flex items-center gap-1 rounded-md px-2 py-1.5 text-sm font-medium text-lex-muted hover:bg-lex-pale hover:text-lex-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lex-gold/40"
             aria-label="Previous legal bite"
           >
             <ChevronLeft className="size-4" />
             Previous
           </button>
-          <span className="text-xs tabular-nums text-lex-navy/50">
+          <span className="text-xs tabular-nums text-lex-subtle">
             {safeIndex + 1} / {filteredFacts.length}
           </span>
           <button
             type="button"
             onClick={() => goTo(safeIndex + 1, 1)}
-            className="inline-flex items-center gap-1 rounded-md px-2 py-1.5 text-sm font-medium text-lex-navy/70 hover:bg-lex-pale hover:text-lex-navy"
+            className="inline-flex items-center gap-1 rounded-md px-2 py-1.5 text-sm font-medium text-lex-muted hover:bg-lex-pale hover:text-lex-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lex-gold/40"
             aria-label="Next legal bite"
           >
             Next
@@ -217,7 +217,7 @@ function CategoryFilterButton({
         "rounded-full px-3 py-1 text-xs font-medium transition-colors",
         active
           ? "bg-lex-brand text-white"
-          : "bg-white text-lex-navy/70 ring-1 ring-lex-navy/10 hover:bg-lex-pale"
+          : "lex-form-option bg-white text-lex-muted ring-1 ring-lex-navy/10 hover:bg-lex-pale dark:bg-lex-card"
       )}
     >
       {children}

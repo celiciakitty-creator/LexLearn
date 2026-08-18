@@ -6,15 +6,18 @@ const categoryStyles: Record<
   { badge: string; dot: string }
 > = {
   "Civil Law": {
-    badge: "bg-sky-100 text-sky-900 ring-sky-200",
-    dot: "bg-sky-500",
+    badge:
+      "bg-sky-100 text-sky-900 ring-sky-200 dark:bg-sky-950/50 dark:text-sky-200 dark:ring-sky-800/60",
+    dot: "bg-sky-500 dark:bg-sky-400",
   },
   "Criminal Law": {
-    badge: "bg-violet-100 text-violet-900 ring-violet-200",
-    dot: "bg-violet-500",
+    badge:
+      "bg-violet-100 text-violet-900 ring-violet-200 dark:bg-violet-950/50 dark:text-violet-200 dark:ring-violet-800/60",
+    dot: "bg-violet-500 dark:bg-violet-400",
   },
   "Everyday Law": {
-    badge: "bg-amber-50 text-amber-950 ring-amber-200",
+    badge:
+      "bg-amber-50 text-amber-950 ring-amber-200 dark:bg-amber-950/50 dark:text-amber-200 dark:ring-amber-800/60",
     dot: "bg-lex-gold",
   },
 };

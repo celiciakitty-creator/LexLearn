@@ -64,7 +64,7 @@ export function SiteHeader() {
                 key={item.label}
                 href={item.href}
                 className={cn(
-                  "relative rounded-md px-3 py-2 text-sm font-medium text-lex-navy/80 transition-colors hover:text-lex-navy",
+                  "relative rounded-md px-3 py-2 text-sm font-medium text-lex-muted transition-colors hover:text-lex-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lex-gold/40",
                   active && "text-lex-navy"
                 )}
                 aria-current={active ? "page" : undefined}
@@ -101,7 +101,7 @@ export function SiteHeader() {
                 "shrink-0 rounded-full px-3 py-1.5 text-xs font-medium",
                 active
                   ? "bg-lex-brand text-white"
-                  : "bg-white text-lex-navy/80 ring-1 ring-lex-navy/10"
+                  : "bg-lex-card text-lex-muted ring-1 ring-lex-navy/10 dark:text-lex-muted"
               )}
               aria-current={active ? "page" : undefined}
             >

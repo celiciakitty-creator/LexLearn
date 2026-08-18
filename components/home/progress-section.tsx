@@ -43,15 +43,15 @@ export function ProgressSection() {
           </h2>
           <Link
             href="/progress"
-            className="text-sm font-medium text-lex-navy/60 transition-colors hover:text-lex-navy"
+            className="text-sm font-medium text-lex-subtle transition-colors hover:text-lex-navy"
           >
             View all
           </Link>
         </div>
 
         <MotionHover>
-          <Card className="overflow-hidden rounded-2xl border-lex-navy/10 bg-white py-0 shadow-[0_12px_40px_-16px_rgba(30,58,95,0.2)] ring-0">
-            <CardHeader className="border-b border-lex-navy/8 bg-lex-pale/40 px-5 py-4">
+          <Card className="lex-surface-card overflow-hidden py-0 shadow-[0_12px_40px_-16px_rgba(30,58,95,0.2)] ring-0 dark:shadow-none">
+            <CardHeader className="lex-card-header-band px-5 py-4">
               <CardTitle className="font-serif text-lg text-lex-navy">
                 Continue where you left off
               </CardTitle>
@@ -60,7 +60,7 @@ export function ProgressSection() {
               <LearningLevelCard levelProgress={summary.level} compact />
 
               <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
-                <div className="relative size-24 shrink-0 overflow-hidden rounded-xl border border-lex-navy/10 shadow-sm sm:size-28">
+                <div className="relative size-24 shrink-0 overflow-hidden rounded-xl border border-lex-navy/10 shadow-sm sm:size-28 dark:border-lex-navy/15">
                   <Image
                     src="/images/floral-banner.png"
                     alt=""
@@ -78,10 +78,10 @@ export function ProgressSection() {
                   <h3 className="font-serif text-xl font-semibold text-lex-navy">
                     {COURSE_TITLE}
                   </h3>
-                  <p className="mt-1 text-sm text-lex-navy/65">
+                  <p className="mt-1 lex-caption">
                     Current module: {summary.currentModuleTitle}
                   </p>
-                  <ul className="mt-4 flex flex-wrap gap-4 text-sm text-lex-navy/70">
+                  <ul className="mt-4 flex flex-wrap gap-4 lex-body-sm">
                     <li className="flex items-center gap-1.5">
                       <BookOpen className="size-4 text-lex-gold" aria-hidden />
                       {summary.completed} / {summary.total} Modules

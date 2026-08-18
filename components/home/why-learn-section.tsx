@@ -36,12 +36,12 @@ export function WhyLearnSection() {
     <MotionWrapper>
       <section
         id="why-learn"
-        className="border-t border-lex-navy/8 bg-gradient-to-b from-white to-lex-pale/40 py-14 sm:py-16"
+        className="lex-section-soft border-t py-14 sm:py-16"
         aria-labelledby="why-learn-heading"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-lex-gold">
+            <p className="lex-eyebrow">
               Why Learn UK Law?
             </p>
             <h2
@@ -50,7 +50,7 @@ export function WhyLearnSection() {
             >
               Practical value for everyday life
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-lex-navy/75">
+            <p className="mt-4 lex-body">
               UK law is not only for lawyers. Understanding civil, criminal and
               everyday legal topics helps you navigate real situations with
               greater clarity—whether you are buying goods, resolving disputes
@@ -62,15 +62,15 @@ export function WhyLearnSection() {
             {reasons.map((reason) => (
               <li
                 key={reason.title}
-                className="rounded-2xl border border-lex-navy/10 bg-white p-5 shadow-sm"
+                className="lex-surface-card p-5"
               >
-                <span className="flex size-10 items-center justify-center rounded-lg bg-lex-pale text-lex-navy ring-1 ring-lex-navy/8">
+                <span className="lex-icon-well size-10">
                   <reason.icon className="size-5" strokeWidth={1.75} aria-hidden />
                 </span>
                 <h3 className="mt-4 font-serif text-lg font-semibold text-lex-navy">
                   {reason.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-lex-navy/70">
+                <p className="mt-2 lex-body-sm">
                   {reason.description}
                 </p>
               </li>

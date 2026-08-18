@@ -22,11 +22,11 @@ export function SurveyLinkButton({
 
   const styles = {
     default:
-      "inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-lex-navy/15 bg-white px-4 text-sm font-medium text-lex-navy shadow-sm hover:bg-lex-pale",
+      "lex-btn-secondary h-10 gap-2 px-4 text-sm",
     "on-dark":
-      "inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-white/20 bg-transparent px-4 text-sm font-medium text-white/90 hover:bg-white/10",
+      "inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-white/20 bg-transparent px-4 text-sm font-medium text-white/90 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lex-gold/50",
     subtle:
-      "inline-flex items-center gap-1.5 text-sm font-medium text-lex-navy/75 underline decoration-lex-gold/50 underline-offset-2 hover:text-lex-navy hover:decoration-lex-gold",
+      "inline-flex items-center gap-1.5 text-sm font-medium text-lex-muted underline decoration-lex-gold/50 underline-offset-2 hover:text-lex-navy hover:decoration-lex-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lex-gold/40",
   } as const;
 
   return (

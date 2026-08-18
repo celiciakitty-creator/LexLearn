@@ -22,7 +22,7 @@ export function PageShell({
       </main>
       <PilotExperienceLayer />
       {showDisclaimer && (
-        <footer className="border-t border-lex-navy/8 bg-lex-pale/40 py-4">
+        <footer className="lex-section-muted py-4">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <LegalDisclaimer variant="banner" />
           </div>

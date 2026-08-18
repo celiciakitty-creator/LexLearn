@@ -18,7 +18,7 @@ export function PilotCtaSection() {
     <MotionWrapper>
       <section
         id="pilot"
-        className="border-y border-lex-navy/10 bg-gradient-to-br from-lex-navy via-lex-navy to-[#162d4a] py-12 text-white sm:py-14"
+        className="lex-pilot-band border-y border-lex-navy/10 py-12 text-white sm:py-14"
         aria-labelledby="pilot-heading"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -83,7 +83,7 @@ export function PilotCtaSection() {
                   </p>
                   <Link
                     href="/learn/pilot"
-                    className="mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-white px-6 text-base font-medium text-lex-navy shadow-md hover:bg-lex-pale sm:w-auto"
+                    className="mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-white px-6 text-base font-medium text-[#1e3a5f] shadow-md hover:bg-lex-pale focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lex-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1e3a5f] sm:w-auto"
                   >
                     Start the Pilot
                     <ArrowRight className="size-4" aria-hidden />

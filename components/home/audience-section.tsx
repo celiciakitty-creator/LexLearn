@@ -44,12 +44,12 @@ export function AudienceSection() {
     <MotionWrapper>
       <section
         id="who-its-for"
-        className="border-t border-lex-navy/8 bg-white py-12 sm:py-14"
+        className="lex-section-panel py-12 sm:py-14"
         aria-labelledby="audience-heading"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-lex-gold">
+            <p className="lex-eyebrow">
               Who is LexLearn for?
             </p>
             <h2
@@ -58,7 +58,7 @@ export function AudienceSection() {
             >
               Built for anyone starting out
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-lex-navy/75">
+            <p className="mt-4 lex-body">
               You do not need prior legal knowledge. LexLearn is designed for
               people who want law explained clearly — not like a law firm
               brochure.
@@ -72,15 +72,15 @@ export function AudienceSection() {
             {audiences.map((item) => (
               <li
                 key={item.title}
-                className="min-w-0 rounded-2xl border border-lex-navy/10 bg-lex-pale/20 p-5 shadow-sm"
+                className="lex-surface-card min-w-0 bg-lex-pale/20 p-5 dark:bg-lex-pale/40"
               >
-                <span className="flex size-10 items-center justify-center rounded-lg bg-white text-lex-navy ring-1 ring-lex-navy/8">
+                <span className="lex-icon-well size-10 bg-white dark:bg-lex-card">
                   <item.icon className="size-5" strokeWidth={1.75} aria-hidden />
                 </span>
                 <h3 className="mt-4 font-serif text-lg font-semibold text-lex-navy">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-lex-navy/70">
+                <p className="mt-2 lex-body-sm">
                   {item.description}
                 </p>
               </li>
@@ -105,12 +105,12 @@ export function HowItWorksSection() {
   return (
     <MotionWrapper>
       <section
-        className="border-t border-lex-navy/8 bg-gradient-to-b from-lex-pale/30 to-white py-10 sm:py-12"
+        className="lex-section-soft py-10 sm:py-12"
         aria-labelledby="how-it-works-heading"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-lex-gold">
+            <p className="lex-eyebrow">
               How LexLearn works
             </p>
             <h2
@@ -119,7 +119,7 @@ export function HowItWorksSection() {
             >
               Law made easier to understand
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-lex-navy/75">
+            <p className="mt-4 lex-body">
               LexLearn breaks UK law into friendly, practical learning — using
               short lessons, everyday examples and quick checks so you can build
               confidence step by step.
@@ -133,9 +133,9 @@ export function HowItWorksSection() {
             {highlights.map((item) => (
               <li
                 key={item.label}
-                className="flex min-w-0 flex-col items-center rounded-xl border border-lex-navy/10 bg-white px-3 py-4 text-center shadow-sm"
+                className="lex-surface-card-sm flex min-w-0 flex-col items-center px-3 py-4 text-center"
               >
-                <span className="flex size-9 items-center justify-center rounded-lg bg-lex-pale text-lex-navy">
+                <span className="lex-icon-well size-9">
                   <item.icon className="size-4" strokeWidth={1.75} aria-hidden />
                 </span>
                 <span className="mt-3 text-xs font-medium leading-snug text-lex-navy sm:text-sm">
@@ -145,7 +145,7 @@ export function HowItWorksSection() {
             ))}
           </ul>
 
-          <p className="mt-6 text-sm text-lex-navy/65">
+          <p className="mt-6 lex-caption">
             Currently testing as an early-access pilot.{" "}
             <Link
               href="#pilot"

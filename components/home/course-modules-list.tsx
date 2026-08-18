@@ -53,19 +53,19 @@ export function CourseModulesList() {
           </h2>
           <Link
             href="/learn"
-            className="text-sm font-medium text-lex-navy/60 transition-colors hover:text-lex-navy"
+            className="text-sm font-medium text-lex-subtle transition-colors hover:text-lex-navy"
           >
             View all
           </Link>
         </div>
 
         <MotionHover>
-          <Card className="overflow-hidden rounded-2xl border-lex-navy/10 bg-white py-0 shadow-[0_12px_40px_-16px_rgba(30,58,95,0.2)] ring-0">
-            <CardHeader className="border-b border-lex-navy/8 bg-lex-pale/40 px-5 py-4">
+          <Card className="lex-surface-card overflow-hidden py-0 shadow-[0_12px_40px_-16px_rgba(30,58,95,0.2)] ring-0 dark:shadow-none">
+            <CardHeader className="lex-card-header-band px-5 py-4">
               <CardTitle className="font-serif text-lg text-lex-navy">
                 {COURSE_TITLE}
               </CardTitle>
-              <p className="mt-1 text-sm text-lex-navy/65">{COURSE_SUBTITLE}</p>
+              <p className="mt-1 lex-caption">{COURSE_SUBTITLE}</p>
             </CardHeader>
             <CardContent className="divide-y divide-lex-navy/8 p-0">
               <ul>
@@ -86,7 +86,7 @@ export function CourseModulesList() {
                         className={cn(
                           "flex size-10 shrink-0 items-center justify-center rounded-lg",
                           isLocked
-                            ? "bg-lex-pale/80 text-lex-navy/40"
+                            ? "bg-lex-pale/80 text-lex-disabled"
                             : "bg-lex-pale text-lex-navy"
                         )}
                       >
@@ -99,7 +99,7 @@ export function CourseModulesList() {
                         <h3
                           className={cn(
                             "font-medium",
-                            isLocked ? "text-lex-navy/50" : "text-lex-navy"
+                            isLocked ? "text-lex-disabled" : "text-lex-navy"
                           )}
                         >
                           {module.title}
@@ -107,7 +107,7 @@ export function CourseModulesList() {
                         <p
                           className={cn(
                             "mt-0.5 text-sm",
-                            isLocked ? "text-lex-navy/40" : "text-lex-navy/65"
+                            isLocked ? "text-lex-faint" : "text-lex-muted"
                           )}
                         >
                           {module.description}
@@ -132,7 +132,7 @@ export function CourseModulesList() {
                         )}
                         {status === "locked" && (
                           <Lock
-                            className="size-4 text-lex-navy/35"
+                            className="size-4 text-lex-faint"
                             aria-label="Locked"
                           />
                         )}
@@ -145,12 +145,12 @@ export function CourseModulesList() {
                       {href ? (
                         <Link
                           href={href}
-                          className="flex items-center gap-4 px-5 py-4 transition-colors hover:bg-lex-pale/30"
+                          className="flex items-center gap-4 px-5 py-4 transition-colors hover:bg-lex-pale/30 dark:hover:bg-lex-pale/50"
                         >
                           {content}
                         </Link>
                       ) : (
-                        <article className="flex items-center gap-4 bg-white/60 px-5 py-4">
+                        <article className="flex items-center gap-4 bg-lex-pale/20 px-5 py-4 dark:bg-lex-pale/30">
                           {content}
                         </article>
                       )}

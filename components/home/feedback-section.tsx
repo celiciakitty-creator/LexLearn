@@ -116,12 +116,12 @@ export function FeedbackSection() {
     <MotionWrapper>
       <section
         id="feedback"
-        className="border-t border-lex-navy/8 bg-gradient-to-b from-lex-pale/40 to-white py-12 dark:to-lex-surface sm:py-16"
+        className="lex-section-muted bg-gradient-to-b from-lex-pale/40 to-white py-12 dark:to-lex-surface sm:py-16"
         aria-labelledby="feedback-heading"
       >
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="text-center sm:text-left">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-lex-gold">
+            <p className="lex-eyebrow">
               Pilot feedback
             </p>
             <h2
@@ -130,7 +130,7 @@ export function FeedbackSection() {
             >
               How was your LexLearn experience?
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-lex-navy/75">
+            <p className="mt-4 lex-body">
               {learnComplete
                 ? "Finished a lesson or quiz? Help shape what LexLearn becomes next. This takes less than a minute."
                 : "Feedback opens after you try the pilot — complete a lesson or quiz first."}
@@ -138,15 +138,15 @@ export function FeedbackSection() {
           </div>
 
           {!learnComplete ? (
-            <div className="mt-8 rounded-2xl border border-dashed border-lex-navy/15 bg-lex-pale/20 p-6 text-center sm:p-8">
-              <p className="text-sm leading-relaxed text-lex-navy/70">
+            <div className="mt-8 rounded-2xl border border-dashed border-lex-navy/15 bg-lex-pale/20 p-6 text-center dark:bg-lex-pale/40 sm:p-8">
+              <p className="lex-body-sm">
                 Feedback opens after you try the pilot. Start with Module 1, work
                 through a lesson, and try the quiz — then come back here to share
                 your thoughts.
               </p>
               <Link
                 href="/learn/pilot"
-                className="mt-5 inline-flex h-10 items-center justify-center rounded-lg border border-lex-navy/15 bg-white px-4 text-sm font-medium text-lex-navy hover:bg-lex-pale"
+                className="lex-btn-secondary mt-5 h-10 px-4 text-sm"
               >
                 Start the Pilot
               </Link>
@@ -154,7 +154,7 @@ export function FeedbackSection() {
           ) : (
           <form
             onSubmit={handleSubmit}
-            className="mt-8 space-y-8 rounded-2xl border border-lex-navy/10 bg-white p-5 shadow-sm sm:p-8"
+            className="lex-surface-card mt-8 space-y-8 p-5 sm:p-8"
             noValidate
           >
             <fieldset>
@@ -168,15 +168,15 @@ export function FeedbackSection() {
                     <label
                       key={activity}
                       className={cn(
-                        "flex min-w-0 cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 text-sm transition-colors",
+                        "flex min-w-0 cursor-pointer items-center gap-3 px-4 py-3 text-sm transition-colors",
                         checked
-                          ? "border-lex-navy/25 bg-lex-pale/50 text-lex-navy"
-                          : "border-lex-navy/10 bg-white text-lex-navy/80 hover:bg-lex-pale/30"
+                          ? "lex-form-option-checked"
+                          : "lex-form-option"
                       )}
                     >
                       <input
                         type="checkbox"
-                        className="size-4 shrink-0 rounded border-lex-navy/30 text-lex-navy focus:ring-lex-gold"
+                        className="size-4 shrink-0 rounded border-lex-navy/30 text-lex-brand focus:ring-lex-gold dark:border-lex-navy/40"
                         checked={checked}
                         onChange={() => toggleActivity(activity)}
                       />
@@ -188,7 +188,7 @@ export function FeedbackSection() {
                 })}
               </div>
               {errors.activities && (
-                <p className="mt-2 text-sm text-red-700" role="alert">
+                <p className="mt-2 text-sm text-red-700 dark:text-red-300" role="alert">
                   {errors.activities}
                 </p>
               )}
@@ -206,7 +206,7 @@ export function FeedbackSection() {
                       "flex min-w-0 flex-1 cursor-pointer items-center justify-center rounded-lg border px-4 py-3 text-sm font-medium transition-colors sm:min-w-[8rem]",
                       form.clarity === rating
                         ? "border-lex-brand bg-lex-brand text-white"
-                        : "border-lex-navy/10 bg-lex-pale/20 text-lex-navy hover:bg-lex-pale/40"
+                        : "lex-form-option-idle"
                     )}
                   >
                     <input
@@ -228,7 +228,7 @@ export function FeedbackSection() {
                 ))}
               </div>
               {errors.clarity && (
-                <p className="mt-2 text-sm text-red-700" role="alert">
+                <p className="mt-2 text-sm text-red-700 dark:text-red-300" role="alert">
                   {errors.clarity}
                 </p>
               )}
@@ -267,7 +267,7 @@ export function FeedbackSection() {
                         "size-9 transition-colors sm:size-10",
                         form.overallRating >= rating
                           ? "fill-lex-gold text-lex-gold"
-                          : "text-lex-navy/25 hover:text-lex-gold/70"
+                          : "text-lex-faint hover:text-lex-gold/80"
                       )}
                       aria-hidden
                     />
@@ -276,7 +276,7 @@ export function FeedbackSection() {
                 ))}
               </div>
               {errors.overallRating && (
-                <p className="mt-2 text-sm text-red-700" role="alert">
+                <p className="mt-2 text-sm text-red-700 dark:text-red-300" role="alert">
                   {errors.overallRating}
                 </p>
               )}
@@ -294,7 +294,7 @@ export function FeedbackSection() {
                       "flex flex-1 cursor-pointer items-center justify-center rounded-lg border px-4 py-3 text-sm font-medium transition-colors",
                       form.wouldUseAgain === option
                         ? "border-lex-brand bg-lex-brand text-white"
-                        : "border-lex-navy/10 bg-lex-pale/20 text-lex-navy hover:bg-lex-pale/40"
+                        : "lex-form-option-idle"
                     )}
                   >
                     <input
@@ -319,7 +319,7 @@ export function FeedbackSection() {
                 ))}
               </div>
               {errors.wouldUseAgain && (
-                <p className="mt-2 text-sm text-red-700" role="alert">
+                <p className="mt-2 text-sm text-red-700 dark:text-red-300" role="alert">
                   {errors.wouldUseAgain}
                 </p>
               )}
@@ -331,7 +331,7 @@ export function FeedbackSection() {
                 className="font-serif text-lg font-semibold text-lex-navy"
               >
                 E. What is one thing you would improve or add?
-                <span className="ml-1 font-sans text-sm font-normal text-lex-navy/60">
+                <span className="ml-1 font-sans text-sm font-normal text-lex-subtle">
                   (optional)
                 </span>
               </label>
@@ -346,11 +346,11 @@ export function FeedbackSection() {
                   }))
                 }
                 placeholder="Tell us what would make LexLearn more useful for you…"
-                className="mt-3 w-full min-w-0 resize-y rounded-lg border border-lex-navy/15 bg-white px-4 py-3 text-sm leading-relaxed text-lex-navy placeholder:text-lex-navy/40 focus:border-lex-navy/30 focus:outline-none focus:ring-2 focus:ring-lex-gold/30"
+                className="lex-input mt-3 min-w-0 resize-y"
                 maxLength={2000}
               />
               {errors.improvement && (
-                <p className="mt-2 text-sm text-red-700" role="alert">
+                <p className="mt-2 text-sm text-red-700 dark:text-red-300" role="alert">
                   {errors.improvement}
                 </p>
               )}
@@ -358,7 +358,7 @@ export function FeedbackSection() {
 
             {status === "stored" && (
               <div
-                className="flex gap-3 rounded-lg border border-emerald-200 bg-emerald-50/90 p-4 text-sm text-emerald-950"
+                className="lex-status-success flex gap-3 p-4 text-sm"
                 role="status"
               >
                 <CheckCircle2
@@ -371,7 +371,7 @@ export function FeedbackSection() {
 
             {status === "pending" && (
               <div
-                className="flex gap-3 rounded-lg border border-amber-200 bg-amber-50/90 p-4 text-sm text-amber-950"
+                className="lex-status-warning flex gap-3 p-4 text-sm"
                 role="status"
               >
                 <CheckCircle2
@@ -387,7 +387,7 @@ export function FeedbackSection() {
 
             {status === "error" && (
               <div
-                className="flex gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-900"
+                className="lex-status-error flex gap-3 p-4 text-sm"
                 role="alert"
               >
                 <AlertCircle className="size-5 shrink-0" aria-hidden />
@@ -413,7 +413,7 @@ export function FeedbackSection() {
               <SurveyLinkButton variant="subtle" />
             </div>
 
-            <p className="text-xs leading-relaxed text-lex-navy/55">
+            <p className="lex-fine-print">
               We do not ask for your name, phone number, address or date of
               birth. Responses are stored without personal identifiers.
             </p>

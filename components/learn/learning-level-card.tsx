@@ -21,7 +21,7 @@ export function LearningLevelCard({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-lex-navy/10 bg-gradient-to-br from-lex-pale/60 to-white p-5 shadow-sm",
+        "lex-surface-card bg-gradient-to-br from-lex-pale/60 to-white p-5 dark:from-lex-pale/50 dark:to-lex-card",
         className
       )}
     >
@@ -32,13 +32,13 @@ export function LearningLevelCard({
         {current.title}
       </h2>
       {!compact && (
-        <p className="mt-2 text-sm leading-relaxed text-lex-navy/70">
+        <p className="mt-2 lex-body-sm">
           {current.description}
         </p>
       )}
       <div className="mt-4">
         <div className="mb-2 flex items-center justify-between text-sm">
-          <span className="text-lex-navy/70">
+          <span className="text-lex-muted">
             {next
               ? `Progress to ${next.title}`
               : "Highest level reached"}
@@ -48,12 +48,12 @@ export function LearningLevelCard({
           </span>
         </div>
         <Progress value={progressToNext} className="gap-0">
-          <ProgressTrack className="h-2.5 bg-lex-pale">
+          <ProgressTrack className="h-2.5 bg-lex-pale dark:bg-lex-pale/80">
             <ProgressIndicator className="rounded-full bg-lex-gold" />
           </ProgressTrack>
         </Progress>
         {next && (
-          <p className="mt-2 text-xs text-lex-navy/55">
+          <p className="mt-2 lex-fine-print">
             Complete {next.minCompletedModules - completedModules} more module
             {next.minCompletedModules - completedModules === 1 ? "" : "s"} to
             reach {next.title}.

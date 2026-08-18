@@ -11,15 +11,15 @@ export function FeatureStrip() {
         {features.map((feature, index) => (
           <MotionHover key={feature.title}>
             <MotionWrapper delay={index * 0.06}>
-              <article className="flex h-full items-start gap-4 rounded-xl border border-lex-navy/10 bg-white p-5 shadow-[0_8px_30px_-12px_rgba(30,58,95,0.18)]">
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-lex-pale text-lex-navy ring-1 ring-lex-navy/8">
+              <article className="lex-surface-card-sm flex h-full items-start gap-4 p-5 shadow-[0_8px_30px_-12px_rgba(30,58,95,0.18)] dark:shadow-none">
+                <span className="lex-icon-well size-11 shrink-0">
                   <feature.icon className="size-5" strokeWidth={1.75} aria-hidden />
                 </span>
                 <div>
                   <h2 className="font-serif text-lg font-semibold text-lex-navy">
                     {feature.title}
                   </h2>
-                  <p className="mt-1 text-sm text-lex-navy/65">
+                  <p className="mt-1 lex-body-sm">
                     {feature.description}
                   </p>
                 </div>

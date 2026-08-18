@@ -23,13 +23,13 @@ export function LearnPageContent() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
       <header className="mb-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-lex-gold">
+        <p className="lex-eyebrow">
           Learning modules
         </p>
         <h1 className="mt-2 font-serif text-3xl font-semibold text-lex-navy sm:text-4xl">
           {COURSE_TITLE}
         </h1>
-        <p className="mt-3 max-w-2xl text-base leading-relaxed text-lex-navy/75">
+        <p className="mt-3 max-w-2xl lex-body">
           {COURSE_SUBTITLE}. Work through each module in order—complete the
           lesson, then take the quiz to unlock the next topic.
         </p>
@@ -38,8 +38,8 @@ export function LearnPageContent() {
         </div>
       </header>
 
-      <div className="mb-8 rounded-2xl border border-lex-navy/10 bg-lex-pale/30 p-4 sm:p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-lex-gold">
+      <div className="lex-surface-card mb-8 bg-lex-pale/30 p-4 dark:bg-lex-pale/40 sm:p-5">
+        <p className="lex-eyebrow tracking-[0.16em]">
           Pilot journey
         </p>
         <div className="mt-3">
