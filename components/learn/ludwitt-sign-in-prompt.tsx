@@ -34,7 +34,7 @@ export function LudwittSignInPrompt({
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
         <Link
           href={loginHref}
-          className="inline-flex h-11 items-center justify-center rounded-lg bg-lex-navy px-6 text-sm font-medium text-white hover:bg-lex-navy/90"
+          className="inline-flex h-11 items-center justify-center rounded-lg bg-lex-brand px-6 text-sm font-medium text-white hover:bg-lex-brand/90"
         >
           Sign in with Ludwitt
         </Link>

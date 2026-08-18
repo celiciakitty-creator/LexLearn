@@ -116,7 +116,7 @@ export function FeedbackSection() {
     <MotionWrapper>
       <section
         id="feedback"
-        className="border-t border-lex-navy/8 bg-gradient-to-b from-lex-pale/40 to-white py-12 sm:py-16"
+        className="border-t border-lex-navy/8 bg-gradient-to-b from-lex-pale/40 to-white py-12 dark:to-lex-surface sm:py-16"
         aria-labelledby="feedback-heading"
       >
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -205,7 +205,7 @@ export function FeedbackSection() {
                     className={cn(
                       "flex min-w-0 flex-1 cursor-pointer items-center justify-center rounded-lg border px-4 py-3 text-sm font-medium transition-colors sm:min-w-[8rem]",
                       form.clarity === rating
-                        ? "border-lex-navy bg-lex-navy text-white"
+                        ? "border-lex-brand bg-lex-brand text-white"
                         : "border-lex-navy/10 bg-lex-pale/20 text-lex-navy hover:bg-lex-pale/40"
                     )}
                   >
@@ -293,7 +293,7 @@ export function FeedbackSection() {
                     className={cn(
                       "flex flex-1 cursor-pointer items-center justify-center rounded-lg border px-4 py-3 text-sm font-medium transition-colors",
                       form.wouldUseAgain === option
-                        ? "border-lex-navy bg-lex-navy text-white"
+                        ? "border-lex-brand bg-lex-brand text-white"
                         : "border-lex-navy/10 bg-lex-pale/20 text-lex-navy hover:bg-lex-pale/40"
                     )}
                   >
@@ -399,7 +399,7 @@ export function FeedbackSection() {
               <Button
                 type="submit"
                 disabled={status === "loading"}
-                className="h-11 w-full rounded-lg bg-lex-navy px-6 text-white hover:bg-lex-navy/90 sm:w-auto"
+                className="h-11 w-full rounded-lg bg-lex-brand px-6 text-white hover:bg-lex-brand/90 sm:w-auto"
               >
                 {status === "loading" ? (
                   <>
@@ -415,8 +415,7 @@ export function FeedbackSection() {
 
             <p className="text-xs leading-relaxed text-lex-navy/55">
               We do not ask for your name, phone number, address or date of
-              birth. Central feedback storage will be enabled after the Week 5
-              reference API review.
+              birth. Responses are stored without personal identifiers.
             </p>
           </form>
           )}

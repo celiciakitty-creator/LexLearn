@@ -93,7 +93,7 @@ export function ProgressSection() {
                   </ul>
                   <Link
                     href={continueHref}
-                    className="mt-5 inline-flex h-10 items-center justify-center rounded-lg bg-lex-navy px-5 text-sm font-medium text-white hover:bg-lex-navy/90"
+                    className="mt-5 inline-flex h-10 items-center justify-center rounded-lg bg-lex-brand px-5 text-sm font-medium text-white hover:bg-lex-brand/90"
                   >
                     Continue Learning
                   </Link>

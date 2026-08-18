@@ -93,7 +93,7 @@ export function QuizView({ quiz }: QuizViewProps) {
             size="lg"
             disabled={!allAnswered}
             onClick={handleSubmit}
-            className="h-11 rounded-lg bg-lex-navy px-6 text-white hover:bg-lex-navy/90 disabled:opacity-50"
+            className="h-11 rounded-lg bg-lex-brand px-6 text-white hover:bg-lex-brand/90 disabled:opacity-50"
           >
             Submit quiz
           </Button>
@@ -132,7 +132,7 @@ export function QuizView({ quiz }: QuizViewProps) {
                 {passed ? (
                   <Link
                     href="/learn"
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-lex-navy px-6 text-sm font-medium text-white hover:bg-lex-navy/90"
+                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-lex-brand px-6 text-sm font-medium text-white hover:bg-lex-brand/90"
                   >
                     Back to modules
                     <ArrowRight className="size-4" />

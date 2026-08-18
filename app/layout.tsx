@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 
 import "./globals.css";
+import { ThemeProvider } from "@/components/layout/theme-provider";
 import { getSiteUrl, siteConfig } from "@/lib/site-metadata";
 
 const geistSans = Geist({
@@ -68,10 +69,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-GB"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-lex-surface font-sans text-lex-navy">
-        {children}
+      <body className="min-h-full font-sans">
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

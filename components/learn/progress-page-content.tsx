@@ -71,7 +71,7 @@ export function ProgressPageContent() {
           </div>
           <Progress value={summary.percent} className="gap-0">
             <ProgressTrack className="h-3 bg-lex-pale">
-              <ProgressIndicator className="rounded-full bg-lex-navy" />
+              <ProgressIndicator className="rounded-full bg-lex-brand" />
             </ProgressTrack>
           </Progress>
           <p className="mt-3 text-sm text-lex-navy/65">{summary.timeRemaining}</p>

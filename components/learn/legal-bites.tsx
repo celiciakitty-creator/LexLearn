@@ -80,14 +80,14 @@ export function LegalBites({
       className={cn(
         "overflow-hidden rounded-2xl border shadow-sm",
         variant === "featured"
-          ? "border-lex-gold/25 bg-gradient-to-br from-[#fdf8eb] via-[#f5f9fd] to-lex-pale"
-          : "border-lex-navy/10 bg-gradient-to-br from-lex-pale to-[#fdf8eb]",
+          ? "border-lex-gold/25 bg-gradient-to-br from-[#fdf8eb] via-[#f5f9fd] to-lex-pale dark:border-lex-gold/30 dark:from-[#1a2538] dark:via-[#152238] dark:to-lex-pale"
+          : "border-lex-navy/10 bg-gradient-to-br from-lex-pale to-[#fdf8eb] dark:border-lex-navy/15 dark:from-lex-pale dark:to-[#1a2538]",
         className
       )}
       aria-labelledby={`legal-bite-${fact.id}`}
     >
       {showCategoryFilter && (
-        <div className="flex flex-wrap gap-2 border-b border-lex-navy/8 bg-white/60 px-4 py-3 sm:px-5">
+        <div className="flex flex-wrap gap-2 border-b border-lex-navy/8 bg-white/60 px-4 py-3 dark:bg-lex-card/60 sm:px-5">
           <CategoryFilterButton
             active={activeCategory === "All"}
             onClick={() => handleCategoryChange("All")}
@@ -191,8 +191,8 @@ function ReviewBadge({ reviewed }: { reviewed: boolean }) {
       className={cn(
         "inline-flex rounded-full px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide ring-1 ring-inset",
         reviewed
-          ? "bg-emerald-50 text-emerald-800 ring-emerald-200"
-          : "bg-amber-50 text-amber-900 ring-amber-200"
+          ? "bg-emerald-50 text-emerald-800 ring-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-200 dark:ring-emerald-800/60"
+          : "bg-amber-50 text-amber-900 ring-amber-200 dark:bg-amber-950/40 dark:text-amber-200 dark:ring-amber-800/60"
       )}
     >
       {reviewed ? "Reviewed" : "Needs Review"}
@@ -216,7 +216,7 @@ function CategoryFilterButton({
       className={cn(
         "rounded-full px-3 py-1 text-xs font-medium transition-colors",
         active
-          ? "bg-lex-navy text-white"
+          ? "bg-lex-brand text-white"
           : "bg-white text-lex-navy/70 ring-1 ring-lex-navy/10 hover:bg-lex-pale"
       )}
     >

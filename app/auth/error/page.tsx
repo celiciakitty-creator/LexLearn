@@ -69,7 +69,7 @@ export default async function AuthErrorPage({ searchParams }: PageProps) {
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Link
             href="/auth/login"
-            className="inline-flex h-11 items-center justify-center rounded-lg bg-lex-navy px-6 text-sm font-medium text-white hover:bg-lex-navy/90"
+            className="inline-flex h-11 items-center justify-center rounded-lg bg-lex-brand px-6 text-sm font-medium text-white hover:bg-lex-brand/90"
           >
             Try again
           </Link>

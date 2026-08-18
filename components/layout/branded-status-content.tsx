@@ -22,7 +22,7 @@ export function BrandedStatusContent({
   secondaryHref = "/",
 }: BrandedStatusContentProps) {
   const primaryClassName =
-    "inline-flex h-11 items-center justify-center rounded-lg bg-lex-navy px-6 text-sm font-medium text-white hover:bg-lex-navy/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lex-gold focus-visible:ring-offset-2";
+    "inline-flex h-11 items-center justify-center rounded-lg bg-lex-brand px-6 text-sm font-medium text-white hover:bg-lex-brand/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lex-gold focus-visible:ring-offset-2";
 
   return (
     <div className="mx-auto max-w-lg px-4 py-20 text-center">

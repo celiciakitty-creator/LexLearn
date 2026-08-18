@@ -7,16 +7,20 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "metrics:check": "node scripts/metrics-check.mjs"
+    "metrics:check": "node scripts/metrics-check.mjs",
+    "feedback:stats": "node scripts/feedback-stats.mjs",
+    "feedback:test-persistence": "node scripts/feedback-persistence-test.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
+    "@supabase/supabase-js": "^2.112.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.43.0",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^1.28.0",
     "next": "16.3.0",
+    "next-themes": "^0.4.6",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "shadcn": "^4.16.1",

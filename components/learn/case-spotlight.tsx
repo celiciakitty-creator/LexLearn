@@ -27,7 +27,7 @@ export function CaseSpotlightCard({
       <div className="border-b border-lex-navy/8 bg-gradient-to-r from-lex-pale/80 to-white px-5 py-4 sm:px-6">
         <div className="flex items-start gap-3">
           <span
-            className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-lex-navy text-white ring-1 ring-lex-navy/20"
+            className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-lex-brand text-white ring-1 ring-lex-navy/20"
             aria-hidden
           >
             <Gavel className="size-5" strokeWidth={1.75} />

@@ -24,7 +24,7 @@ export function ModuleUnavailable({ moduleId }: ModuleUnavailableProps) {
       </p>
       <Link
         href="/learn"
-        className="mt-6 inline-flex rounded-lg bg-lex-navy px-5 py-2.5 text-sm font-medium text-white hover:bg-lex-navy/90"
+        className="mt-6 inline-flex rounded-lg bg-lex-brand px-5 py-2.5 text-sm font-medium text-white hover:bg-lex-brand/90"
       >
         Back to modules
       </Link>

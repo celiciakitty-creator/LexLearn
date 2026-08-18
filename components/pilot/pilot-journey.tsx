@@ -72,7 +72,7 @@ export function PilotJourney({
                       : state === "current"
                         ? onDark
                           ? "bg-white text-lex-navy"
-                          : "bg-lex-navy text-white"
+                          : "bg-lex-brand text-white"
                         : onDark
                           ? "bg-white/10 text-white/60"
                           : "bg-lex-navy/8 text-lex-navy/50"

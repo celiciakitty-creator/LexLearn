@@ -60,7 +60,7 @@ export function PilotFeedbackPrompt({ className }: PilotFeedbackPromptProps) {
           <Button
             type="button"
             onClick={scrollToFeedback}
-            className="h-10 flex-1 rounded-lg bg-lex-navy px-4 text-white hover:bg-lex-navy/90 sm:flex-none"
+            className="h-10 flex-1 rounded-lg bg-lex-brand px-4 text-white hover:bg-lex-brand/90 sm:flex-none"
           >
             Give Feedback
           </Button>

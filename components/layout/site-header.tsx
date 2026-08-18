@@ -3,11 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { Moon } from "lucide-react";
-
 import { AuthHeaderActions } from "@/components/layout/auth-header-actions";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { LexLearnLogo } from "@/components/home/lexlearn-logo";
-import { Button } from "@/components/ui/button";
 import { siteNavigation } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
@@ -84,14 +82,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            className="size-9 border-lex-navy/12 bg-white text-lex-navy shadow-sm hover:bg-lex-pale"
-            aria-label="Toggle dark mode"
-          >
-            <Moon className="size-4" />
-          </Button>
+          <ThemeToggle />
           <AuthHeaderActions />
         </div>
       </div>
@@ -109,7 +100,7 @@ export function SiteHeader() {
               className={cn(
                 "shrink-0 rounded-full px-3 py-1.5 text-xs font-medium",
                 active
-                  ? "bg-lex-navy text-white"
+                  ? "bg-lex-brand text-white"
                   : "bg-white text-lex-navy/80 ring-1 ring-lex-navy/10"
               )}
               aria-current={active ? "page" : undefined}

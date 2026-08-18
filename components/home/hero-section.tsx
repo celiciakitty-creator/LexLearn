@@ -41,7 +41,7 @@ export function HeroSection() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <Link
               href={continueHref}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-lex-navy px-6 text-base font-medium text-white shadow-md hover:bg-lex-navy/90"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-lex-brand px-6 text-base font-medium text-white shadow-md hover:bg-lex-brand/90"
             >
               {hero.primaryCta}
               <ArrowRight className="size-4 shrink-0" aria-hidden />

@@ -27,7 +27,7 @@ const supabase = createClient(url, key, {
   auth: { persistSession: false, autoRefreshToken: false },
 });
 
-const tables = ['developers', 'apps', 'events', 'blocked_user_ids'];
+const tables = ['developers', 'apps', 'events', 'blocked_user_ids', 'pilot_feedback'];
 
 for (const table of tables) {
   const { error } = await supabase.from(table).select('*', { head: true, count: 'exact' });
