@@ -6,7 +6,7 @@ LexLearn is a **Week 5 startup pilot** — a beginner-friendly UK law learning p
 
 Content focuses on the law of **England and Wales** unless a section explicitly states otherwise. LexLearn is in **early access** — we are testing with real learners and collecting pilot feedback to shape what comes next.
 
-**Production URL:** set `NEXT_PUBLIC_SITE_URL` in Vercel (e.g. `https://your-app.vercel.app`). Replace this line with your live URL once deployed.
+**Production URL:** https://lex-learn-ten.vercel.app/
 
 Interactive lessons, realistic scenarios, Case Spotlight and Statute Spotlight explainers, Legal Bites, quizzes, and local progress tracking help learners understand how law applies in everyday life—without replacing professional legal advice.
 
